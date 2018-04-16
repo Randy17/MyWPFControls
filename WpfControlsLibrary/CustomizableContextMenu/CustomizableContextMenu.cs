@@ -2,19 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using WpfControlsLibrary.CustomizableContextMenu.Configuration;
 using WpfControlsLibrary.CustomizableContextMenu.Models;
 using WpfControlsLibrary.CustomizableContextMenu.ViewModels;
@@ -58,8 +50,8 @@ namespace WpfControlsLibrary.CustomizableContextMenu
         private bool _isClosedFired = true;
         private uscContextMenuBody _body;
         private FrameworkElement _placementTarget;
-        private double _currentVerticalOffset = 0;
-        private double _currentHorizontalOffset = 0;
+        private double _currentVerticalOffset;
+        private double _currentHorizontalOffset;
 
         private uscContextMenuBody Body
         {
@@ -98,7 +90,8 @@ namespace WpfControlsLibrary.CustomizableContextMenu
             if (_placementTarget == null)
             {
                 _placementTarget = this.PlacementTarget as FrameworkElement;
-                _placementTarget.ContextMenuOpening += PlacementTarget_ContextMenuOpening;
+                if (_placementTarget != null)
+                    _placementTarget.ContextMenuOpening += PlacementTarget_ContextMenuOpening;
             }
         }
 
@@ -107,7 +100,8 @@ namespace WpfControlsLibrary.CustomizableContextMenu
             base.OnRender(drawingContext);
 
             Popup myParentPopup = this.Parent as Popup;
-            myParentPopup.PopupAnimation = PopupAnimation.None;
+            if (myParentPopup != null)
+                myParentPopup.PopupAnimation = PopupAnimation.None;
         }
 
         #region DependencyProperties
@@ -188,6 +182,8 @@ namespace WpfControlsLibrary.CustomizableContextMenu
             set { SetValue(IsExtendedOpensOnTopProperty, value); }
         }
 
+        public double CurrentHorizontalOffset { get => _currentHorizontalOffset; set => _currentHorizontalOffset = value; }
+
         // Using a DependencyProperty as the backing store for IsExtendedOpensOnTop.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IsExtendedOpensOnTopProperty =
             DependencyProperty.Register("IsExtendedOpensOnTop", typeof(bool), typeof(CustomizableContextMenu), new PropertyMetadata(false));
@@ -233,11 +229,11 @@ namespace WpfControlsLibrary.CustomizableContextMenu
             System.Diagnostics.Debug.WriteLine("Opened.");
 
             _currentVerticalOffset = Body.grdExtendBtn.ActualHeight / -2;
-            _currentHorizontalOffset = Body.grdExtendBtn.ActualWidth / -2;
+            CurrentHorizontalOffset = Body.grdExtendBtn.ActualWidth / -2;
             RecalculateContextMenuPosition();
 
             this.VerticalOffset = _currentVerticalOffset;
-            this.HorizontalOffset = _currentHorizontalOffset;
+            this.HorizontalOffset = CurrentHorizontalOffset;
             
             _isClosedFired = false;            
         }
@@ -257,7 +253,7 @@ namespace WpfControlsLibrary.CustomizableContextMenu
             Point mousePosition = Mouse.GetPosition(_placementTarget);
             Point menuPosition = new Point(mousePosition.X, mousePosition.Y);
             menuPosition.Y += _currentVerticalOffset;
-            menuPosition.X += _currentHorizontalOffset;
+            menuPosition.X += CurrentHorizontalOffset;
 
             double verticalDiff = (_placementTarget.DesiredSize.Height - (menuPosition.Y + this.ActualHeight));
             if (verticalDiff < -MaxExtendedListHeight)
@@ -274,14 +270,14 @@ namespace WpfControlsLibrary.CustomizableContextMenu
             double horizontalDiff = (_placementTarget.DesiredSize.Width - (menuPosition.X + this.ActualWidth));
             if (horizontalDiff < 0)
             {
-                _currentHorizontalOffset = _placementTarget.DesiredSize.Width - mousePosition.X;
+                CurrentHorizontalOffset = _placementTarget.DesiredSize.Width - mousePosition.X;
             }
         }
         private void ResetContextMenuState()
         {
             IsExtendedOpensOnTop = false;
             _currentVerticalOffset = 0;
-            _currentHorizontalOffset = 0;
+            CurrentHorizontalOffset = 0;
         }
         #endregion
     }

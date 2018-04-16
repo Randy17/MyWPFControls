@@ -1,20 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using WpfControlsLibrary.Members;
 
 namespace WpfControlsLibrary
@@ -139,7 +127,7 @@ namespace WpfControlsLibrary
         }
         private void ConvertSVGToXaml(string file)
         {
-            if (!File.Exists(file) || System.IO.Path.GetExtension(file) != ".svg")
+            if (!File.Exists(file) || Path.GetExtension(file) != ".svg")
             {
                 return;
             }
@@ -162,7 +150,8 @@ namespace WpfControlsLibrary
             if (e.OldValue != e.NewValue)
             {
                 VectorIconToggleButton sender = (d as VectorIconToggleButton);
-                sender.ChangeIconDrawingImage(e.NewValue);
+                if (sender != null)
+                    sender.ChangeIconDrawingImage(e.NewValue);
             }
         }
 
