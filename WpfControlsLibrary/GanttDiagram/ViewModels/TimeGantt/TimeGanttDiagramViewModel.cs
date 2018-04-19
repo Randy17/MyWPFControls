@@ -148,7 +148,7 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels.TimeGantt
                 GanttRowViewModelBase row = Rows.FirstOrDefault(r => r.Caption == item.RowName);
                 if (row == null)
                 {
-                    row = new GanttRowViewModelBase(item.RowName, this);
+                    row = new GanttRowViewModelBase(item.RowName, this) { Position = Rows.Count + 1 };
                     row.Items.Add(new TimeGanttItemViewModel(row, item));
                     Rows.Add(row);
                 }

@@ -8,6 +8,8 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels
     {
         #region Fields
         protected GanttDiagramViewModelBase _ganttDiagram;
+        private string _addItemToolTip;
+        private string _deleteRowToolTip;
         private bool _isShrinked;
 
         private Command _moveRowUpCmd;
@@ -24,6 +26,30 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels
         {
             get;
             set;
+        }
+        public string AddItemToolTip
+        {
+            get
+            {
+                return _addItemToolTip;
+            }
+            set
+            {
+                _addItemToolTip = value;
+                RaisePropertyChanged(nameof(AddItemToolTip));
+            }
+        }
+        public string DeleteRowToolTip
+        {
+            get
+            {
+                return _deleteRowToolTip;
+            }
+            set
+            {
+                _deleteRowToolTip = value;
+                RaisePropertyChanged(nameof(DeleteRowToolTip));
+            }
         }
         public GanttDiagramViewModelBase GanttDiagram
         {
@@ -52,21 +78,21 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels
         #endregion
 
         #region Commands
-        internal Command DeleteRowCommand
+        public Command DeleteRowCommand
         {
             get
             {
                 return new Command(DeleteRow);
             }
         }
-        internal Command AddItemCommand
+        public Command AddItemCommand
         {
             get
             {
                 return new Command(AddItem);
             }
         }
-        internal Command MoveRowUpCmd
+        public Command MoveRowUpCmd
         {
             get
             {
@@ -75,7 +101,7 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels
                 return _moveRowUpCmd;
             }
         }
-        internal Command MoveRowDownCmd
+        public Command MoveRowDownCmd
         {
             get
             {
