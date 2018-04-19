@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:WpfControls="clr-namespace:WpfControlsLibrary;assembly=WpfControlsLibrary"
         xmlns:CustomizableContextMenu="clr-namespace:WpfControlsLibrary.CustomizableContextMenu;assembly=WpfControlsLibrary"
+        xmlns:gantt="clr-namespace:WpfControlsLibrary.GanttDiagram;assembly=WpfControlsLibrary"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525" WindowState="Maximized" Closing="Window_Closing">
     <Window.Background>
@@ -15,70 +16,76 @@
             </LinearGradientBrush.GradientStops>
         </LinearGradientBrush>
     </Window.Background>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
+    <TabControl>
+        <TabItem Header="Sample 1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
 
+                <Image Source="Icons\Context Menu BackGround.png" Stretch="UniformToFill">
+                    <Image.ContextMenu>
+                        <CustomizableContextMenu:CustomizableContextMenu CommandsGroups="{Binding CommandsGroups}" MenuConfiguration="{Binding MenuConfig}"/>
+                    </Image.ContextMenu>
+                </Image>
 
-        <Image Source="Icons\Context Menu BackGround.png" Stretch="UniformToFill">
-            <Image.ContextMenu>
-                <CustomizableContextMenu:CustomizableContextMenu CommandsGroups="{Binding CommandsGroups}" MenuConfiguration="{Binding MenuConfig}"/>
-            </Image.ContextMenu>
-        </Image>
+                <Grid Grid.Row="1" Visibility="Collapsed">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <WpfControls:VectorIconButton FontSize="14" TextBlock.LineHeight="14" Margin="4"
+                                              Caption="Button with SVG file"
+                                              VectorIconPath="Icons/Freesample.svg"
+                                              IsEnabled="{Binding ElementName=state, Path=IsChecked}" />
 
-        <Grid Grid.Row="1" Visibility="Collapsed">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="100"/>
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <WpfControls:VectorIconButton FontSize="14" TextBlock.LineHeight="14" Margin="4"
-                                      Caption="Button with SVG file"
-                                      VectorIconPath="Icons/Freesample.svg"
-                                      IsEnabled="{Binding ElementName=state, Path=IsChecked}" />
+                    <WpfControls:VectorIconButton FontSize="14" TextBlock.LineHeight="14" Margin="4" Grid.Column="1"
+                                              Caption="Button with Drawing image"                                      
+                                              IsEnabled="{Binding ElementName=state, Path=IsChecked}">
+                    <WpfControls:VectorIconButton.IconDrawingImage>
+                        <DrawingImage>
+                            <DrawingImage.Drawing>
+                                <DrawingGroup ClipGeometry="M0,0 V512 H512 V0 H0 Z">
+                                    <DrawingGroup>
+                                        <GeometryDrawing Brush="#FF000000" Geometry="F1 M512,512z M0,0z M268.9,270.3C269.8,273.9 271.6,277.5 271.6,281.1 271.9,300.4 271.9,319.7 271.7,338.9 271.5,356.5 265.1,372 252.2,383.8 248.1,387.5 240.8,390.2 235.4,389.6 210.1,386.8 193,361.5 200.4,336.7 213.5,292.9 227.2,249.2 242.5,206.1 246.5,194.8 257.3,185.8 266,174.3 262.7,164.5 257.7,152.8 254.7,140.5 245,100.9 268.6,59.3000000000001 307.3,47.2000000000001 338.3,37.5000000000001 367,43.7000000000001 389.7,66.0000000000001 415,90.9000000000001 418.9,122.1 407.1,155.2 404.4,162.6 400.3,169.5 396.1,178.4 417.1,186.3 422.9,204.3 428.6,223.3 438.5,256.4 450.1,288.9 460.3,321.8 463.3,331.6 465.4,342.2 465.1,352.4 464.4,372 446.6,388.9 427.6,390 412.1,391 400.5,378.4 395.1,357.5 388.1,330.5 391.3,303.4 391.4,276.2 391.4,274.2 393.5,272.3 396.3,267.7 398.8,273.5 401.7,277.1 401.8,280.8 402.3,297.7 402.1,314.5 402.1,331.4 402.1,337 401.8,342.7 402.6,348.2 404.6,362.1 415.1,370.5 427.4,368.8 439.6,367.1 447.4,355.7 445.5,342.1 444.9,338.2 443.7,334.3 442.4,330.5 430.7,294.7 418.2,259 407.4,222.9 401.7,203.8 390.4,194.6 371.1,194.5 345.4,194.4 319.7,194.5 294,194.6 274.8,194.7 263,203.2 257.4,222.6 246.6,259.6 234.1,296 222.5,332.7 220.8,338 219.3,343.7 219.6,349.1 220.3,361.1 230.9,369.7 242.5,368.9 253.7,368.1 261,360.4 261.1,348.1 261.2,328 260.5,308 260.6,287.9 260.6,282 262.1,276 262.9,270.1 264.9,270.2 266.9,270.3 268.9,270.3z M332.2,63C298.8,63.6 271.2,92.7 272.4,126 273.5,158 302.8,186.2 333.9,185.1 366.4,184 393.8,156.3 394,124.3 394.2,91.6 364.8,62.4 332.2,63z" />
+                                        <GeometryDrawing Brush="#FF000000" Geometry="F1 M512,512z M0,0z M189.5,428.3C194.5,424.4 198.2,421.5 202.1,418.4 288.7,477.4 374,477.3 462.4,412.1 465.1,414.8 468.8,418.3 471.9,421.3 421.4,492.7 261.2,505.4 189.5,428.3z" />
+                                        <GeometryDrawing Brush="#FF000000" Geometry="F1 M512,512z M0,0z M229.7,168.7C175.8,181.5 140.4,211.6 120.6,266.5 130.8,263.4 136.6,262.1 141.9,259.8 151.5,255.6 160.8,250.8 170.2,246.3 176.5,243.3 181,244.6 183.9,252.7 182.4,254.5 181,257.9 178.5,259.1 157.1,270.1 135.6,281.1 113.8,291.3 101.8,296.9 96.2,295.1 92.6,284.4 85.1,262.4 78.7,240 72.4,217.6 71.5,214.3 73.2,210.2 73.8,205.5 89.9,206.8 87.9,220.2 91.6,228.6 95.7,237.9 98.1,247.9 102.8,262.5 108.3,251.3 111.6,244.4 115,237.5 133.9,199.8 162.9,173.5 202.9,159.7 211.8,156.8 221.3,152.8 229.7,168.7z" />
+                                    </DrawingGroup>
+                                </DrawingGroup>
+                            </DrawingImage.Drawing>
+                        </DrawingImage>
+                    </WpfControls:VectorIconButton.IconDrawingImage>
+                </WpfControls:VectorIconButton>
 
-            <WpfControls:VectorIconButton FontSize="14" TextBlock.LineHeight="14" Margin="4" Grid.Column="1"
-                                      Caption="Button with Drawing image"                                      
-                                      IsEnabled="{Binding ElementName=state, Path=IsChecked}">
-            <WpfControls:VectorIconButton.IconDrawingImage>
-                <DrawingImage>
-                    <DrawingImage.Drawing>
-                        <DrawingGroup ClipGeometry="M0,0 V512 H512 V0 H0 Z">
-                            <DrawingGroup>
-                                <GeometryDrawing Brush="#FF000000" Geometry="F1 M512,512z M0,0z M268.9,270.3C269.8,273.9 271.6,277.5 271.6,281.1 271.9,300.4 271.9,319.7 271.7,338.9 271.5,356.5 265.1,372 252.2,383.8 248.1,387.5 240.8,390.2 235.4,389.6 210.1,386.8 193,361.5 200.4,336.7 213.5,292.9 227.2,249.2 242.5,206.1 246.5,194.8 257.3,185.8 266,174.3 262.7,164.5 257.7,152.8 254.7,140.5 245,100.9 268.6,59.3000000000001 307.3,47.2000000000001 338.3,37.5000000000001 367,43.7000000000001 389.7,66.0000000000001 415,90.9000000000001 418.9,122.1 407.1,155.2 404.4,162.6 400.3,169.5 396.1,178.4 417.1,186.3 422.9,204.3 428.6,223.3 438.5,256.4 450.1,288.9 460.3,321.8 463.3,331.6 465.4,342.2 465.1,352.4 464.4,372 446.6,388.9 427.6,390 412.1,391 400.5,378.4 395.1,357.5 388.1,330.5 391.3,303.4 391.4,276.2 391.4,274.2 393.5,272.3 396.3,267.7 398.8,273.5 401.7,277.1 401.8,280.8 402.3,297.7 402.1,314.5 402.1,331.4 402.1,337 401.8,342.7 402.6,348.2 404.6,362.1 415.1,370.5 427.4,368.8 439.6,367.1 447.4,355.7 445.5,342.1 444.9,338.2 443.7,334.3 442.4,330.5 430.7,294.7 418.2,259 407.4,222.9 401.7,203.8 390.4,194.6 371.1,194.5 345.4,194.4 319.7,194.5 294,194.6 274.8,194.7 263,203.2 257.4,222.6 246.6,259.6 234.1,296 222.5,332.7 220.8,338 219.3,343.7 219.6,349.1 220.3,361.1 230.9,369.7 242.5,368.9 253.7,368.1 261,360.4 261.1,348.1 261.2,328 260.5,308 260.6,287.9 260.6,282 262.1,276 262.9,270.1 264.9,270.2 266.9,270.3 268.9,270.3z M332.2,63C298.8,63.6 271.2,92.7 272.4,126 273.5,158 302.8,186.2 333.9,185.1 366.4,184 393.8,156.3 394,124.3 394.2,91.6 364.8,62.4 332.2,63z" />
-                                <GeometryDrawing Brush="#FF000000" Geometry="F1 M512,512z M0,0z M189.5,428.3C194.5,424.4 198.2,421.5 202.1,418.4 288.7,477.4 374,477.3 462.4,412.1 465.1,414.8 468.8,418.3 471.9,421.3 421.4,492.7 261.2,505.4 189.5,428.3z" />
-                                <GeometryDrawing Brush="#FF000000" Geometry="F1 M512,512z M0,0z M229.7,168.7C175.8,181.5 140.4,211.6 120.6,266.5 130.8,263.4 136.6,262.1 141.9,259.8 151.5,255.6 160.8,250.8 170.2,246.3 176.5,243.3 181,244.6 183.9,252.7 182.4,254.5 181,257.9 178.5,259.1 157.1,270.1 135.6,281.1 113.8,291.3 101.8,296.9 96.2,295.1 92.6,284.4 85.1,262.4 78.7,240 72.4,217.6 71.5,214.3 73.2,210.2 73.8,205.5 89.9,206.8 87.9,220.2 91.6,228.6 95.7,237.9 98.1,247.9 102.8,262.5 108.3,251.3 111.6,244.4 115,237.5 133.9,199.8 162.9,173.5 202.9,159.7 211.8,156.8 221.3,152.8 229.7,168.7z" />
-                            </DrawingGroup>
-                        </DrawingGroup>
-                    </DrawingImage.Drawing>
-                </DrawingImage>
-            </WpfControls:VectorIconButton.IconDrawingImage>
-        </WpfControls:VectorIconButton>
+                    <WpfControls:VectorIconToggleButton Grid.Column="2" 
+                                                    IsEnabled="{Binding ElementName=state, Path=IsChecked}">
+                    <WpfControls:VectorIconToggleButton.IconDrawingImage>
+                        <DrawingImage>
+                            <DrawingImage.Drawing>
+                                <DrawingGroup ClipGeometry="M0,0 V512 H512 V0 H0 Z">
+                                    <DrawingGroup>
+                                        <GeometryDrawing Brush="#FF000000" Geometry="F1 M512,512z M0,0z M268.9,270.3C269.8,273.9 271.6,277.5 271.6,281.1 271.9,300.4 271.9,319.7 271.7,338.9 271.5,356.5 265.1,372 252.2,383.8 248.1,387.5 240.8,390.2 235.4,389.6 210.1,386.8 193,361.5 200.4,336.7 213.5,292.9 227.2,249.2 242.5,206.1 246.5,194.8 257.3,185.8 266,174.3 262.7,164.5 257.7,152.8 254.7,140.5 245,100.9 268.6,59.3000000000001 307.3,47.2000000000001 338.3,37.5000000000001 367,43.7000000000001 389.7,66.0000000000001 415,90.9000000000001 418.9,122.1 407.1,155.2 404.4,162.6 400.3,169.5 396.1,178.4 417.1,186.3 422.9,204.3 428.6,223.3 438.5,256.4 450.1,288.9 460.3,321.8 463.3,331.6 465.4,342.2 465.1,352.4 464.4,372 446.6,388.9 427.6,390 412.1,391 400.5,378.4 395.1,357.5 388.1,330.5 391.3,303.4 391.4,276.2 391.4,274.2 393.5,272.3 396.3,267.7 398.8,273.5 401.7,277.1 401.8,280.8 402.3,297.7 402.1,314.5 402.1,331.4 402.1,337 401.8,342.7 402.6,348.2 404.6,362.1 415.1,370.5 427.4,368.8 439.6,367.1 447.4,355.7 445.5,342.1 444.9,338.2 443.7,334.3 442.4,330.5 430.7,294.7 418.2,259 407.4,222.9 401.7,203.8 390.4,194.6 371.1,194.5 345.4,194.4 319.7,194.5 294,194.6 274.8,194.7 263,203.2 257.4,222.6 246.6,259.6 234.1,296 222.5,332.7 220.8,338 219.3,343.7 219.6,349.1 220.3,361.1 230.9,369.7 242.5,368.9 253.7,368.1 261,360.4 261.1,348.1 261.2,328 260.5,308 260.6,287.9 260.6,282 262.1,276 262.9,270.1 264.9,270.2 266.9,270.3 268.9,270.3z M332.2,63C298.8,63.6 271.2,92.7 272.4,126 273.5,158 302.8,186.2 333.9,185.1 366.4,184 393.8,156.3 394,124.3 394.2,91.6 364.8,62.4 332.2,63z" />
+                                        <GeometryDrawing Brush="#FF000000" Geometry="F1 M512,512z M0,0z M189.5,428.3C194.5,424.4 198.2,421.5 202.1,418.4 288.7,477.4 374,477.3 462.4,412.1 465.1,414.8 468.8,418.3 471.9,421.3 421.4,492.7 261.2,505.4 189.5,428.3z" />
+                                        <GeometryDrawing Brush="#FF000000" Geometry="F1 M512,512z M0,0z M229.7,168.7C175.8,181.5 140.4,211.6 120.6,266.5 130.8,263.4 136.6,262.1 141.9,259.8 151.5,255.6 160.8,250.8 170.2,246.3 176.5,243.3 181,244.6 183.9,252.7 182.4,254.5 181,257.9 178.5,259.1 157.1,270.1 135.6,281.1 113.8,291.3 101.8,296.9 96.2,295.1 92.6,284.4 85.1,262.4 78.7,240 72.4,217.6 71.5,214.3 73.2,210.2 73.8,205.5 89.9,206.8 87.9,220.2 91.6,228.6 95.7,237.9 98.1,247.9 102.8,262.5 108.3,251.3 111.6,244.4 115,237.5 133.9,199.8 162.9,173.5 202.9,159.7 211.8,156.8 221.3,152.8 229.7,168.7z" />
+                                    </DrawingGroup>
+                                </DrawingGroup>
+                            </DrawingImage.Drawing>
+                        </DrawingImage>
+                    </WpfControls:VectorIconToggleButton.IconDrawingImage>
+                </WpfControls:VectorIconToggleButton>
 
-            <WpfControls:VectorIconToggleButton Grid.Column="2" 
-                                            IsEnabled="{Binding ElementName=state, Path=IsChecked}">
-            <WpfControls:VectorIconToggleButton.IconDrawingImage>
-                <DrawingImage>
-                    <DrawingImage.Drawing>
-                        <DrawingGroup ClipGeometry="M0,0 V512 H512 V0 H0 Z">
-                            <DrawingGroup>
-                                <GeometryDrawing Brush="#FF000000" Geometry="F1 M512,512z M0,0z M268.9,270.3C269.8,273.9 271.6,277.5 271.6,281.1 271.9,300.4 271.9,319.7 271.7,338.9 271.5,356.5 265.1,372 252.2,383.8 248.1,387.5 240.8,390.2 235.4,389.6 210.1,386.8 193,361.5 200.4,336.7 213.5,292.9 227.2,249.2 242.5,206.1 246.5,194.8 257.3,185.8 266,174.3 262.7,164.5 257.7,152.8 254.7,140.5 245,100.9 268.6,59.3000000000001 307.3,47.2000000000001 338.3,37.5000000000001 367,43.7000000000001 389.7,66.0000000000001 415,90.9000000000001 418.9,122.1 407.1,155.2 404.4,162.6 400.3,169.5 396.1,178.4 417.1,186.3 422.9,204.3 428.6,223.3 438.5,256.4 450.1,288.9 460.3,321.8 463.3,331.6 465.4,342.2 465.1,352.4 464.4,372 446.6,388.9 427.6,390 412.1,391 400.5,378.4 395.1,357.5 388.1,330.5 391.3,303.4 391.4,276.2 391.4,274.2 393.5,272.3 396.3,267.7 398.8,273.5 401.7,277.1 401.8,280.8 402.3,297.7 402.1,314.5 402.1,331.4 402.1,337 401.8,342.7 402.6,348.2 404.6,362.1 415.1,370.5 427.4,368.8 439.6,367.1 447.4,355.7 445.5,342.1 444.9,338.2 443.7,334.3 442.4,330.5 430.7,294.7 418.2,259 407.4,222.9 401.7,203.8 390.4,194.6 371.1,194.5 345.4,194.4 319.7,194.5 294,194.6 274.8,194.7 263,203.2 257.4,222.6 246.6,259.6 234.1,296 222.5,332.7 220.8,338 219.3,343.7 219.6,349.1 220.3,361.1 230.9,369.7 242.5,368.9 253.7,368.1 261,360.4 261.1,348.1 261.2,328 260.5,308 260.6,287.9 260.6,282 262.1,276 262.9,270.1 264.9,270.2 266.9,270.3 268.9,270.3z M332.2,63C298.8,63.6 271.2,92.7 272.4,126 273.5,158 302.8,186.2 333.9,185.1 366.4,184 393.8,156.3 394,124.3 394.2,91.6 364.8,62.4 332.2,63z" />
-                                <GeometryDrawing Brush="#FF000000" Geometry="F1 M512,512z M0,0z M189.5,428.3C194.5,424.4 198.2,421.5 202.1,418.4 288.7,477.4 374,477.3 462.4,412.1 465.1,414.8 468.8,418.3 471.9,421.3 421.4,492.7 261.2,505.4 189.5,428.3z" />
-                                <GeometryDrawing Brush="#FF000000" Geometry="F1 M512,512z M0,0z M229.7,168.7C175.8,181.5 140.4,211.6 120.6,266.5 130.8,263.4 136.6,262.1 141.9,259.8 151.5,255.6 160.8,250.8 170.2,246.3 176.5,243.3 181,244.6 183.9,252.7 182.4,254.5 181,257.9 178.5,259.1 157.1,270.1 135.6,281.1 113.8,291.3 101.8,296.9 96.2,295.1 92.6,284.4 85.1,262.4 78.7,240 72.4,217.6 71.5,214.3 73.2,210.2 73.8,205.5 89.9,206.8 87.9,220.2 91.6,228.6 95.7,237.9 98.1,247.9 102.8,262.5 108.3,251.3 111.6,244.4 115,237.5 133.9,199.8 162.9,173.5 202.9,159.7 211.8,156.8 221.3,152.8 229.7,168.7z" />
-                            </DrawingGroup>
-                        </DrawingGroup>
-                    </DrawingImage.Drawing>
-                </DrawingImage>
-            </WpfControls:VectorIconToggleButton.IconDrawingImage>
-        </WpfControls:VectorIconToggleButton>
-
-            <CheckBox Grid.Row="1" Margin="4" x:Name="state" IsChecked="True">Is Enabled</CheckBox>
-        </Grid>
-    </Grid>
+                    <CheckBox Grid.Row="1" Margin="4" x:Name="state" IsChecked="True">Is Enabled</CheckBox>
+                </Grid>
+            </Grid>
+            </TabItem>
+        <TabItem Header="Sample 2">
+            <gantt:uscGanttDiagram CanEdit="False" DataContext="{Binding GanttViewModel}"></gantt:uscGanttDiagram>
+        </TabItem>
+    </TabControl>
 </Window>

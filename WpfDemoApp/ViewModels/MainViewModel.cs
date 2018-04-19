@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using WpfControlsLibrary.CustomizableContextMenu;
 using WpfControlsLibrary.CustomizableContextMenu.Configuration;
 using WpfControlsLibrary.CustomizableContextMenu.Models;
+using WpfControlsLibrary.GanttDiagram.ViewModels.TimeGantt;
 using WpfDemoApp.Infrastructure;
 using WpfDemoApp.Models;
 
@@ -25,6 +26,8 @@ namespace WpfDemoApp.ViewModels
         {
             get;set;
         }
+
+        public TimeGanttDiagramViewModel GanttViewModel { get; set; }
 
         public MainViewModel()
         {
@@ -110,11 +113,25 @@ namespace WpfDemoApp.ViewModels
             if (File.Exists(CONFIG_FILE_PATH))
                 MenuConfig = ContextMenuConfiguration.LoadConfig(File.ReadAllText(CONFIG_FILE_PATH));
 
+            InitGantt();
+
         }
 
         internal void SaveContextMenuConfig()
         {
             File.WriteAllText(CONFIG_FILE_PATH, ContextMenuConfiguration.SaveConfigToJson(CommandsGroups));
+        }
+
+        private void InitGantt()
+        {
+            GanttViewModel = new TimeGanttDiagramViewModel(new List<TimeGanttItem>
+            {
+                new TimeGanttItem(DateTime.Now, DateTime.Now.AddMinutes(10), "Row 1", "Item 1" ),
+                new TimeGanttItem(DateTime.Now.AddMinutes(20), DateTime.Now.AddMinutes(30), "Row 1", "Item 2" ),
+                new TimeGanttItem(DateTime.Now, DateTime.Now.AddMinutes(30), "Row 2", "Item 3" ),
+                new TimeGanttItem(DateTime.Now, DateTime.Now.AddMinutes(10), "Row 3", "Item 4" ),
+                new TimeGanttItem(DateTime.Now, DateTime.Now.AddMinutes(10), "Row 3", "Item 5" ),
+            });
         }
     }
 }

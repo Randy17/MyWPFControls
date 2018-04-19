@@ -83,6 +83,32 @@
     <Compile Include="CustomizableContextMenu\Configuration\ContextCommandConfig.cs" />
     <Compile Include="CustomizableContextMenu\CustomizableContextMenu.cs" />
     <Compile Include="CustomizableContextMenu\Models\ContextMenuSubgroup.cs" />
+    <Compile Include="GanttDiagram\Converters\IntToLeftMarginConverter.cs" />
+    <Compile Include="GanttDiagram\Converters\ScaleStepToPointConverter.cs" />
+    <Compile Include="GanttDiagram\Converters\ScaleStepToViewPortConverter.cs" />
+    <Compile Include="GanttDiagram\uscGanttDiagram.xaml.cs">
+      <DependentUpon>uscGanttDiagram.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GanttDiagram\uscGanttItem.xaml.cs">
+      <DependentUpon>uscGanttItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GanttDiagram\uscGanttRow.xaml.cs">
+      <DependentUpon>uscGanttRow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GanttDiagram\uscGraphScale.xaml.cs">
+      <DependentUpon>uscGraphScale.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GanttDiagram\uscRangeSelector.xaml.cs">
+      <DependentUpon>uscRangeSelector.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GanttDiagram\ViewModels\GanttItemViewModelBase.cs" />
+    <Compile Include="GanttDiagram\ViewModels\GanttDiagramViewModelBase.cs" />
+    <Compile Include="GanttDiagram\ViewModels\GanttRowViewModelBase.cs" />
+    <Compile Include="GanttDiagram\ViewModels\ScaleValue.cs" />
+    <Compile Include="GanttDiagram\ViewModels\TimeGantt\TimeGanttDiagramViewModel.cs" />
+    <Compile Include="GanttDiagram\ViewModels\TimeGantt\TimeGanttItem.cs" />
+    <Compile Include="GanttDiagram\ViewModels\TimeGantt\TimeGanttItemViewModel.cs" />
+    <Compile Include="Infrastrucrure\Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Infrastrucrure\Converters\CollectionToMaxColumnsCountConverter.cs" />
     <Compile Include="Infrastrucrure\Converters\NullToCollapsedConverter.cs" />
     <Compile Include="Infrastrucrure\Converters\ReverseBoolConverter.cs" />
@@ -114,6 +140,26 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="CustomizableContextMenu\uscContextMenuBody.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GanttDiagram\uscGanttDiagram.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GanttDiagram\uscGanttItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GanttDiagram\uscGanttRow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GanttDiagram\uscGraphScale.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GanttDiagram\uscRangeSelector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -170,6 +216,9 @@
     <EmbeddedResource Include="Icons\open_folder.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="GanttDiagram\Styles\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
