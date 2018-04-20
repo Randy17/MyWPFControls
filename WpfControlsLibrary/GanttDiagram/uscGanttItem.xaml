@@ -46,7 +46,7 @@
         <Grid x:Name="grid">
             <Thumb Width="10" Height="10" Cursor="SizeWE" Margin="-7 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Left"  x:Name="LeftAdorner" DragDelta="LeftAdorner_DragDelta" />
             <Thumb Width="10" Height="10" Cursor="SizeWE" Margin="0 0 -7 0" VerticalAlignment="Center" HorizontalAlignment="Right" x:Name="RightAdorner" DragDelta="RightAdorner_DragDelta"/>
-            <ContentPresenter Content="{Binding}"></ContentPresenter>
+            <ContentPresenter Content="{Binding Content}"></ContentPresenter>
         </Grid>
     </Border>
 </UserControl>

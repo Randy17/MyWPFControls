@@ -84,7 +84,7 @@
                 </Grid>
             </Grid>
             </TabItem>
-        <TabItem Header="Sample 2">
+        <TabItem Header="Sample 2" IsSelected="True">
             <gantt:uscGanttDiagram CanEdit="False" DataContext="{Binding GanttViewModel}"></gantt:uscGanttDiagram>
         </TabItem>
     </TabControl>

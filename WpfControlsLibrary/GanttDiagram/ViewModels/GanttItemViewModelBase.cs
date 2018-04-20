@@ -94,6 +94,7 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels
                 RaisePropertyChanged(nameof(GanttRow));
             }
         }
+        public object Content { get; set; }
         #endregion
 
         public GanttItemViewModelBase(GanttRowViewModelBase parentRow)

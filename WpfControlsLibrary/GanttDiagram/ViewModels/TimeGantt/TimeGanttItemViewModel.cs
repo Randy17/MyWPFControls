@@ -27,6 +27,7 @@
         {
             _contentItem = item;
             Caption = item.Name;
+            Content = item;
 
             StartPosition = (int)((item.StartTime - ((TimeGanttDiagramViewModel) parentRow.GanttDiagram).StartTime).Ticks / ((TimeGanttDiagramViewModel) parentRow.GanttDiagram).ScaleResolution);
             Duration = (int)((item.EndTime - item.StartTime).Ticks / ((TimeGanttDiagramViewModel) parentRow.GanttDiagram).ScaleResolution);
