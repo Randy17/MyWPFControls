@@ -6,6 +6,8 @@
         xmlns:WpfControls="clr-namespace:WpfControlsLibrary;assembly=WpfControlsLibrary"
         xmlns:CustomizableContextMenu="clr-namespace:WpfControlsLibrary.CustomizableContextMenu;assembly=WpfControlsLibrary"
         xmlns:gantt="clr-namespace:WpfControlsLibrary.GanttDiagram;assembly=WpfControlsLibrary"
+        xmlns:behaviors="clr-namespace:WpfControlsLibrary.Behaviors;assembly=WpfControlsLibrary"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525" WindowState="Maximized" Closing="Window_Closing">
     <Window.Background>
@@ -85,7 +87,19 @@
             </Grid>
             </TabItem>
         <TabItem Header="Sample 2" IsSelected="True">
-            <gantt:uscGanttDiagram CanEdit="False" DataContext="{Binding GanttViewModel}"></gantt:uscGanttDiagram>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <gantt:uscGanttDiagram CanEdit="False" DataContext="{Binding GanttViewModel}"></gantt:uscGanttDiagram>
+
+                <TextBlock Grid.Row="1" Text="Long text Long textLong text Long textLong text" TextWrapping="Wrap" Width="100" Height="40">
+                    <i:Interaction.Behaviors>
+                        <behaviors:AutoTooltipTextBlockBehavior></behaviors:AutoTooltipTextBlockBehavior>
+                    </i:Interaction.Behaviors>
+                </TextBlock>
+            </Grid>
         </TabItem>
     </TabControl>
 </Window>

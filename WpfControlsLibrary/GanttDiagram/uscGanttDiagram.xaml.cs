@@ -25,6 +25,7 @@ namespace WpfControlsLibrary.GanttDiagram
         private bool _canScroll;
         #endregion
 
+        #region Dependency Properties
         #region ScaleStep
         public int ScaleStep
         {
@@ -49,6 +50,34 @@ namespace WpfControlsLibrary.GanttDiagram
         public static readonly DependencyProperty CanEditProperty =
             DependencyProperty.Register("CanEdit", typeof(bool), typeof(uscGanttDiagram), new PropertyMetadata(false));
         #endregion
+
+        #region DiagramBackground
+        public Brush DiagramBackground
+        {
+            get { return (Brush)GetValue(DiagramBackgroundProperty); }
+            set { SetValue(DiagramBackgroundProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for DiagramBackground.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty DiagramBackgroundProperty =
+            DependencyProperty.Register("DiagramBackground", typeof(Brush), typeof(uscGanttDiagram),
+                new PropertyMetadata(new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFE4ECF7"))));
+        #endregion
+
+        #region RowsHeadersBackground
+        public Brush RowsHeadersBackground
+        {
+            get { return (Brush)GetValue(RowsHeadersBackgroundProperty); }
+            set { SetValue(RowsHeadersBackgroundProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for RowsHeadersBackground.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty RowsHeadersBackgroundProperty =
+            DependencyProperty.Register("RowsHeadersBackground", typeof(Brush), typeof(uscGanttDiagram),
+                new PropertyMetadata(new SolidColorBrush((Color) ColorConverter.ConvertFromString("#FFC0E4FD"))));
+        #endregion
+        #endregion
+
 
         public uscGanttDiagram()
         {
