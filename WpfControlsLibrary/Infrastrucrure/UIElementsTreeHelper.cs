@@ -8,7 +8,7 @@ using System.Windows.Media;
 
 namespace WpfControlsLibrary.Infrastrucrure
 {
-    internal class UIElementsTreeHelper
+    public class UIElementsTreeHelper
     {
         public static T FindParent<T>(DependencyObject child) where T : DependencyObject
         {
