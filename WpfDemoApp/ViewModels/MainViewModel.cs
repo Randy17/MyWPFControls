@@ -17,6 +17,8 @@ namespace WpfDemoApp.ViewModels
     {
         private const string CONFIG_FILE_PATH = "menuConfig.json";
 
+        private TimeGanttDiagramViewModel _ganttViewModel;
+
         public List<ContextMenuGroup> CommandsGroups
         {
             get;set;
@@ -27,7 +29,23 @@ namespace WpfDemoApp.ViewModels
             get;set;
         }
 
-        public TimeGanttDiagramViewModel GanttViewModel { get; set; }
+        public TimeGanttDiagramViewModel GanttViewModel
+        {
+            get { return _ganttViewModel; }
+            set
+            {
+                _ganttViewModel = value;
+                RaisePropertyChanged(nameof(GanttViewModel));
+            }
+        }
+
+        public Command RefreshGanttCmd
+        {
+            get
+            {
+                return new Command(RefreshGantt);
+            }
+        }
 
         public MainViewModel()
         {
@@ -132,6 +150,11 @@ namespace WpfDemoApp.ViewModels
                 new TimeGanttItem(DateTime.Now, DateTime.Now.AddMinutes(10), "Row 3", "Item 4" ),
                 new TimeGanttItem(DateTime.Now, DateTime.Now.AddMinutes(10), "Row 3", "Item 5" ),
             });
+        }
+
+        private void RefreshGantt(object obj)
+        {
+            InitGantt();
         }
     }
 }

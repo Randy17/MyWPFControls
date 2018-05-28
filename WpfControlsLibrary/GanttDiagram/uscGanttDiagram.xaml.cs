@@ -91,12 +91,13 @@ namespace WpfControlsLibrary.GanttDiagram
 
         private void UscGanttDiagram_OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if (DataContext != null)
+            if (DataContext is GanttDiagramViewModelBase diagramViewModel)
             {
                 this.Visibility = Visibility.Visible;
                 //(DataContext as GraphBaseViewModel).ScaleStep = ScaleStep;
-                ScaleStep = (DataContext as GanttDiagramViewModelBase).ScaleStep;
-                (DataContext as GanttDiagramViewModelBase).uscGanttDiagram = this;
+                ScaleStep = diagramViewModel.ScaleStep;
+                diagramViewModel.uscGanttDiagram = this;
+                diagramViewModel.CalculateScaleValues(graph.ActualWidth);
             }
             else
             {

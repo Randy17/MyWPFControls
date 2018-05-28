@@ -46,11 +46,11 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels.TimeGantt
             {
                 if (ScaleTimeSpan.TotalHours > 6)
                 {
-                    ScaleResolution = _scaleStepTicks / value;
+                    ScaleResolution = _scaleStepTicks / (double)value;
                 }
                 else
                 {
-                    ScaleResolution = _scaleStepTicks / value;
+                    ScaleResolution = _scaleStepTicks / (double)value;
                 }
                 LeftRangeSelectorPosition = LeftRangeSelectorPosition * value / ScaleStep;
                 RangeWidth = RangeWidth * value / ScaleStep;
@@ -126,7 +126,7 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels.TimeGantt
 
                 _minScaleStepTicks = TimeSpan.FromMinutes(10).Ticks;
                 _maxScaleStepTicks = TimeSpan.FromHours(1).Ticks;
-                ScaleResolution = _scaleStepTicks / ScaleStep;
+                ScaleResolution = _scaleStepTicks / (double)ScaleStep;
 
                 StartRangeTime = StartTime.AddTicks((long)(LeftRangeSelectorPosition * ScaleResolution));
                 EndRangeTime = StartTime.AddTicks((long)((LeftRangeSelectorPosition + RangeWidth) * ScaleResolution));
