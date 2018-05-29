@@ -7,7 +7,7 @@
              xmlns:ganttConverters="clr-namespace:WpfControlsLibrary.GanttDiagram.Converters"
              mc:Ignorable="d" x:Name="control"
              d:DesignHeight="450" d:DesignWidth="800" Width="{Binding Duration, Mode=TwoWay}" HorizontalAlignment="Left" VerticalAlignment="Bottom"
-             PreviewMouseDown="UscGanttItem_OnPreviewMouseDown" PreviewMouseUp="UscGanttItem_OnPreviewMouseUp" MouseLeave="UscGanttItem_OnMouseLeave">
+             PreviewMouseDown="UscGanttItem_OnPreviewMouseDown" PreviewMouseUp="UscGanttItem_OnPreviewMouseUp" MouseLeave="UscGanttItem_OnMouseLeave" >
     <UserControl.Resources>
         <ganttConverters:IntToLeftMarginConverter x:Key="intToLeftMarginConverter"></ganttConverters:IntToLeftMarginConverter>
 
@@ -40,6 +40,12 @@
                 <Setter Property="Background" Value="White" />
                 <Setter Property="BorderBrush" Value="Black" />
                 <Setter Property="BorderThickness" Value="1" />
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                        <Setter Property="BorderThickness" Value="2"></Setter>
+                        <Setter Property="Background" Value="{Binding SelectedItemBackground, RelativeSource={RelativeSource FindAncestor, AncestorType=local:uscGanttDiagram}}"></Setter>
+                    </DataTrigger>
+                </Style.Triggers>
             </Style>
         </Border.Style>
         

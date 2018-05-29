@@ -91,6 +91,7 @@
     <Compile Include="GanttDiagram\Converters\IntToLeftMarginConverter.cs" />
     <Compile Include="GanttDiagram\Converters\ScaleStepToPointConverter.cs" />
     <Compile Include="GanttDiagram\Converters\ScaleStepToViewPortConverter.cs" />
+    <Compile Include="GanttDiagram\Models\IGanttItem.cs" />
     <Compile Include="GanttDiagram\uscGanttDiagram.xaml.cs">
       <DependentUpon>uscGanttDiagram.xaml</DependentUpon>
     </Compile>

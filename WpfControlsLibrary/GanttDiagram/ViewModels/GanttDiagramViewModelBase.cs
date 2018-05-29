@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media;
+using WpfControlsLibrary.GanttDiagram.Models;
 using WpfControlsLibrary.Infrastrucrure;
 
 namespace WpfControlsLibrary.GanttDiagram.ViewModels
@@ -55,7 +52,7 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels
                 RaisePropertyChanged(nameof(ServiceMessage));
             }
         }
-        public uscGanttDiagram uscGanttDiagram;
+        internal uscGanttDiagram uscGanttDiagram;
         public virtual int ScaleStep
         {
             get
@@ -163,6 +160,9 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels
                 RaisePropertyChanged(nameof(RangeWidth));
             }
         }
+
+        public virtual ObservableCollection<IGanttItem> Items { get; private set; }
+
         #endregion
 
         public GanttDiagramViewModelBase()
@@ -193,7 +193,7 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels
                 GraphUpdated(this, new EventArgs());
             }
         }
-        public virtual void CalculateScaleValues(double graphWidth)
+        internal virtual void CalculateScaleValues(double graphWidth)
         {
             ScaleValues.Clear();
             //ScaleValues.Add(new ScaleValue() { Value = 0, Margin = 0 });
@@ -212,6 +212,11 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels
                 sv.Margin = ScaleStep * i + (ScaleStep / 2 - (int)formattedText.Width / 2);
                 ScaleValues.Add(sv);
             }
+        }
+
+        internal virtual bool TrySetItems(object newItems)
+        {
+            return true;
         }
         #endregion
     }

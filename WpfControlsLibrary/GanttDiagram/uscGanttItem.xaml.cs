@@ -86,6 +86,11 @@ namespace WpfControlsLibrary.GanttDiagram
 
         private void UscGanttItem_OnPreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
+            if (_isClicked && DataContext is GanttItemViewModelBase ganttItemViewModel)
+            {
+                ganttItemViewModel.IsSelected = true;
+            }
+
             _isMoving = false;
             _isClicked = false;
         }

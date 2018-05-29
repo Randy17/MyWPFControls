@@ -8,7 +8,7 @@
              xmlns:ganttUI="clr-namespace:WpfControlsLibrary.GanttDiagram"
              xmlns:commonConverters="clr-namespace:WpfControlsLibrary.Infrastrucrure.Converters"
              mc:Ignorable="d" x:Name="control"
-             d:DesignHeight="450" d:DesignWidth="800" Background="White" DataContextChanged="UscGanttDiagram_OnDataContextChanged" >
+             d:DesignHeight="450" d:DesignWidth="800" Background="White" >
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -26,7 +26,7 @@
                 <Style TargetType="Grid">
                     <Setter Property="Visibility" Value="Visible"></Setter>
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsVisible}" Value="False">
+                        <DataTrigger Binding="{Binding GanttBehavior.IsVisible, ElementName=control}" Value="False">
                             <Setter Property="Visibility" Value="Collapsed"></Setter>
                         </DataTrigger>
                     </Style.Triggers>
@@ -42,7 +42,7 @@
             </Grid.ColumnDefinitions>
             
             <ScrollViewer x:Name="leftScroll" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" Margin="0,0,0,17" PreviewMouseWheel="leftScroll_PreviewMouseWheel">
-                <ItemsControl ItemsSource="{Binding Rows}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Height="{Binding Height, ElementName=graphPanel}"
+                <ItemsControl ItemsSource="{Binding GanttBehavior.Rows, ElementName=control}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Height="{Binding Height, ElementName=graphPanel}"
                               Margin="0,0,0,25" Width="200">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
@@ -169,20 +169,20 @@
 
             <ScrollViewer x:Name="rightScroll" Grid.Column="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" ScrollChanged="RightScroll_OnScrollChanged"
                           PreviewMouseWheel="RightScroll_OnPreviewMouseWheel">
-                <Grid MaxWidth="{Binding MaxWidth}" x:Name="graphPanel">
+                <Grid MaxWidth="{Binding GanttBehavior.MaxWidth, ElementName=control}" x:Name="graphPanel">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <Border Background="{Binding DiagramBackground, ElementName=control}">
-                        <ItemsControl ItemsSource="{Binding Rows}" x:Name="graph" SizeChanged="Graph_OnSizeChanged" Padding="0">
+                        <ItemsControl ItemsSource="{Binding GanttBehavior.Rows, ElementName=control}" x:Name="graph" SizeChanged="Graph_OnSizeChanged" Padding="0">
                             <ItemsControl.Background>
-                                <DrawingBrush x:Name="backgroundBrush" AlignmentX="Left" Stretch="Uniform" TileMode="Tile" Viewport="{Binding Path=DataContext.ScaleStep, ElementName=control, Converter={StaticResource viewportConverter}}" ViewportUnits="Absolute">
+                                <DrawingBrush x:Name="backgroundBrush" AlignmentX="Left" Stretch="Uniform" TileMode="Tile" Viewport="{Binding Path=GanttBehavior.ScaleStep, ElementName=control, Converter={StaticResource viewportConverter}}" ViewportUnits="Absolute">
                                     <DrawingBrush.Drawing>
                                         <DrawingGroup>
                                             <GeometryDrawing>
                                                 <GeometryDrawing.Geometry>
-                                                    <LineGeometry EndPoint="{Binding Path=DataContext.ScaleStep, ElementName=control, Converter={StaticResource scalestepToPointConverter}}" StartPoint="0,0"/>
+                                                    <LineGeometry EndPoint="{Binding Path=GanttBehavior.ScaleStep, ElementName=control, Converter={StaticResource scalestepToPointConverter}}" StartPoint="0,0"/>
                                                 </GeometryDrawing.Geometry>
                                                 <GeometryDrawing.Pen>
                                                     <Pen Thickness="2">
@@ -239,15 +239,17 @@
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
                     </Border>
-                    <ganttUI:uscGraphScale Grid.Row="1" x:Name="timeScale" DataContext="{Binding ScaleValues}" Background="{Binding Background, ElementName=control}"></ganttUI:uscGraphScale>
-                    <ganttUI:uscRangeSelector Grid.RowSpan="2" Visibility="{Binding IsRangeSelectorVisible, Converter={StaticResource boolToVisibilityConverter}}" 
-                                              LeftAdornerPosition="{Binding LeftRangeSelectorPosition, Mode=TwoWay}" SelectedAreaWidth="{Binding RangeWidth, Mode=TwoWay}"></ganttUI:uscRangeSelector>
+                    <ganttUI:uscGraphScale Grid.Row="1" x:Name="timeScale" DataContext="{Binding GanttBehavior.ScaleValues, ElementName=control}" Background="{Binding Background, ElementName=control}"></ganttUI:uscGraphScale>
+                    <ganttUI:uscRangeSelector Grid.RowSpan="2" Visibility="{Binding GanttBehavior.IsRangeSelectorVisible, Converter={StaticResource boolToVisibilityConverter}, ElementName=control}" 
+                                              LeftAdornerPosition="{Binding GanttBehavior.LeftRangeSelectorPosition, Mode=TwoWay, ElementName=control}" SelectedAreaWidth="{Binding GanttBehavior.RangeWidth, Mode=TwoWay, ElementName=control}"></ganttUI:uscRangeSelector>
                 </Grid>
             </ScrollViewer>
 
             <ToolBarPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
                 <Label Content="Масштаб:" FontSize="12"  HorizontalAlignment="Right" Margin="1,0" VerticalAlignment="Center" Padding="2"/>
-                <Slider x:Name="scaleSlider"  HorizontalAlignment="Right" Width="139" Minimum="{Binding MinScaleStepValue}" Maximum="{Binding MaxScaleStepValue}" Value="{Binding ScaleStep}" Margin="1,0" VerticalAlignment="Center"/>
+                <Slider x:Name="scaleSlider"  HorizontalAlignment="Right" Width="139" Minimum="{Binding GanttBehavior.MinScaleStepValue, ElementName=control}" 
+                        Maximum="{Binding GanttBehavior.MaxScaleStepValue, ElementName=control}" 
+                        Value="{Binding GanttBehavior.ScaleStep, ElementName=control}" Margin="1,0" VerticalAlignment="Center"/>
             </ToolBarPanel>
         </Grid>
 
@@ -256,13 +258,13 @@
                 <Style TargetType="Grid">
                     <Setter Property="Visibility" Value="Collapsed"></Setter>
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsVisible}" Value="False">
+                        <DataTrigger Binding="{Binding GanttBehavior.IsVisible, ElementName=control}" Value="False">
                             <Setter Property="Visibility" Value="Visible"></Setter>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
             </Grid.Style>
-            <TextBlock Text="{Binding ServiceMessage}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" FontWeight="Medium" Foreground="#FF4B4B4B" TextWrapping="Wrap" TextAlignment="Center" ></TextBlock>
+            <TextBlock Text="{Binding GanttBehavior.ServiceMessage, ElementName=control}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" FontWeight="Medium" Foreground="#FF4B4B4B" TextWrapping="Wrap" TextAlignment="Center" ></TextBlock>
         </Grid>
     </Grid>
 </UserControl>

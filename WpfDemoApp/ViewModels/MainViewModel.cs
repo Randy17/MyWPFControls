@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -28,6 +29,8 @@ namespace WpfDemoApp.ViewModels
         {
             get;set;
         }
+
+        public ObservableCollection<TimeGanttItem> GanttItems { get; set; }
 
         public TimeGanttDiagramViewModel GanttViewModel
         {
@@ -142,19 +145,24 @@ namespace WpfDemoApp.ViewModels
 
         private void InitGantt()
         {
-            GanttViewModel = new TimeGanttDiagramViewModel(new List<TimeGanttItem>
+            GanttItems = new ObservableCollection<TimeGanttItem>
             {
-                new TimeGanttItem(DateTime.Now, DateTime.Now.AddMinutes(10), "Row 1", "Item 1" ),
-                new TimeGanttItem(DateTime.Now.AddMinutes(20), DateTime.Now.AddMinutes(30), "Row 1", "Item 2" ),
-                new TimeGanttItem(DateTime.Now, DateTime.Now.AddMinutes(30), "Row 2", "Item 3" ),
-                new TimeGanttItem(DateTime.Now, DateTime.Now.AddMinutes(10), "Row 3", "Item 4" ),
-                new TimeGanttItem(DateTime.Now, DateTime.Now.AddMinutes(10), "Row 3", "Item 5" ),
-            });
+                new TimeGanttItem(DateTime.Now, DateTime.Now.AddMinutes(10), "Row 1", "Item 1"),
+                new TimeGanttItem(DateTime.Now.AddMinutes(20), DateTime.Now.AddMinutes(30), "Row 1", "Item 2"),
+                new TimeGanttItem(DateTime.Now, DateTime.Now.AddMinutes(30), "Row 2", "Item 3"),
+                new TimeGanttItem(DateTime.Now, DateTime.Now.AddMinutes(10), "Row 3", "Item 4"),
+                new TimeGanttItem(DateTime.Now, DateTime.Now.AddMinutes(10), "Row 3", "Item 5")
+            };
+            GanttViewModel = new TimeGanttDiagramViewModel();
         }
 
         private void RefreshGantt(object obj)
         {
-            InitGantt();
+            //InitGantt();
+            //GanttViewModel.Items = GanttItems;
+
+            GanttItems.Add(new TimeGanttItem(DateTime.Now, DateTime.Now.AddMinutes(10), "Row 4", "Item 5"));
+            //RaisePropertyChanged(nameof(GanttItems));
         }
     }
 }

@@ -6,6 +6,7 @@
         xmlns:WpfControls="clr-namespace:WpfControlsLibrary;assembly=WpfControlsLibrary"
         xmlns:CustomizableContextMenu="clr-namespace:WpfControlsLibrary.CustomizableContextMenu;assembly=WpfControlsLibrary"
         xmlns:gantt="clr-namespace:WpfControlsLibrary.GanttDiagram;assembly=WpfControlsLibrary"
+        xmlns:ganttVm="clr-namespace:WpfControlsLibrary.GanttDiagram.ViewModels.TimeGantt;assembly=WpfControlsLibrary"
         xmlns:behaviors="clr-namespace:WpfControlsLibrary.Behaviors;assembly=WpfControlsLibrary"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
@@ -92,7 +93,8 @@
                     <RowDefinition />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <gantt:uscGanttDiagram CanEdit="False" DataContext="{Binding GanttViewModel}"></gantt:uscGanttDiagram>
+                <gantt:uscGanttDiagram CanEdit="False" SelectedItemBackground="DarkSalmon" ItemsSource="{Binding GanttItems}" >
+                </gantt:uscGanttDiagram>
 
                 <TextBlock Grid.Row="1" Text="Long text Long textLong text Long textLong text" TextWrapping="Wrap" Width="100" Height="40">
                     <i:Interaction.Behaviors>

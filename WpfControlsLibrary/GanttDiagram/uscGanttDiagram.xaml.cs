@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +15,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfControlsLibrary.GanttDiagram.Models;
 using WpfControlsLibrary.GanttDiagram.ViewModels;
+using WpfControlsLibrary.GanttDiagram.ViewModels.TimeGantt;
 
 namespace WpfControlsLibrary.GanttDiagram
 {
@@ -76,33 +81,160 @@ namespace WpfControlsLibrary.GanttDiagram
             DependencyProperty.Register("RowsHeadersBackground", typeof(Brush), typeof(uscGanttDiagram),
                 new PropertyMetadata(new SolidColorBrush((Color) ColorConverter.ConvertFromString("#FFC0E4FD"))));
         #endregion
+
+        #region SelectedItemBackground
+
+        public Brush SelectedItemBackground
+        {
+            get { return (Brush)GetValue(SelectedItemBackgroundProperty); }
+            set { SetValue(SelectedItemBackgroundProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for SelectedItemBackground.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty SelectedItemBackgroundProperty =
+            DependencyProperty.Register("SelectedItemBackground", typeof(Brush), typeof(uscGanttDiagram), new PropertyMetadata(new SolidColorBrush(Colors.White)));
+
         #endregion
 
+        #region GanttBehavior
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        internal GanttDiagramViewModelBase GanttBehavior
+        {
+            get { return (GanttDiagramViewModelBase)GetValue(GanttBehaviorProperty); }
+            set { SetValue(GanttBehaviorProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for GanttBehavior.  This enables animation, styling, binding, etc...
+        internal static readonly DependencyProperty GanttBehaviorProperty =
+            DependencyProperty.Register("GanttBehavior", typeof(GanttDiagramViewModelBase), typeof(uscGanttDiagram), new PropertyMetadata(null,
+                (o, args) =>
+                {
+                    if (o is uscGanttDiagram ganttDiagram)
+                    {
+                        GanttDiagramViewModelBase diagramViewModel = args.NewValue as GanttDiagramViewModelBase;
+                        ganttDiagram.Visibility = Visibility.Visible;
+                        //(DataContext as GraphBaseViewModel).ScaleStep = ScaleStep;
+                        ganttDiagram.ScaleStep = diagramViewModel.ScaleStep;
+                        diagramViewModel.uscGanttDiagram = ganttDiagram;
+                        diagramViewModel.CalculateScaleValues(ganttDiagram.graph.ActualWidth);
+
+                        ganttDiagram.UpdateDiagrammViewModel();
+                    }
+                }));
+
+        #endregion
+
+        #region DiagramType
+
+        public enum DiagramTypeEnum
+        {
+            TimeGantt
+        }
+
+        public DiagramTypeEnum DiagramType
+        {
+            get { return (DiagramTypeEnum)GetValue(DiagramTypeProperty); }
+            set { SetValue(DiagramTypeProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for DiagramType.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty DiagramTypeProperty =
+            DependencyProperty.Register("DiagramType", typeof(DiagramTypeEnum), typeof(uscGanttDiagram), new PropertyMetadata(DiagramTypeEnum.TimeGantt,
+                (o, args) =>
+                {
+                    if (o is uscGanttDiagram ganttDiagram)
+                    {
+                        ganttDiagram.DiagramTypeChanged(args.OldValue, args.NewValue);
+                    }
+                }));
+
+        private void DiagramTypeChanged(object oldValue, object newValue)
+        {
+            if (newValue is DiagramTypeEnum diagramType)
+            {
+                if ((DiagramTypeEnum)oldValue != diagramType)
+                {
+                    switch (diagramType)
+                    {
+                        case DiagramTypeEnum.TimeGantt:
+                            GanttBehavior = new TimeGanttDiagramViewModel();
+                            break;
+                        default:
+                            GanttBehavior = null;
+                            break;
+                    }
+
+                    UpdateDiagrammViewModel();
+                }
+            }
+        }
+
+        #endregion
+
+        #region ItemsSource
+
+        public IList ItemsSource
+        {
+            get { return (IList)GetValue(ItemsSourceProperty); }
+            set { SetValue(ItemsSourceProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ItemsSource.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ItemsSourceProperty =
+            DependencyProperty.Register("ItemsSource", typeof(IList), typeof(uscGanttDiagram), new PropertyMetadata(null,
+                (o, args) =>
+                {
+                    if (o is uscGanttDiagram ganttDiagram)
+                    {
+                        ganttDiagram.ItemsSourceChanged(args.OldValue, args.NewValue);
+                    }
+                }));
+
+        private void ItemsSourceChanged(object oldValue, object newValue)
+        {
+            UpdateDiagrammViewModel();
+        }
+
+        #endregion
+
+        #region SelectedItem
+
+        public object SelectedItem
+        {
+            get { return (object)GetValue(SelectedItemProperty); }
+            set { SetValue(SelectedItemProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for SelectedItem.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty SelectedItemProperty =
+            DependencyProperty.Register("SelectedItem", typeof(object), typeof(uscGanttDiagram), new PropertyMetadata(null));
+
+        #endregion
+
+        #endregion
 
         public uscGanttDiagram()
         {
             InitializeComponent();
+
+            //TODO: Refactoring
+            switch (DiagramType)
+            {
+                case DiagramTypeEnum.TimeGantt:
+                    GanttBehavior = new TimeGanttDiagramViewModel();
+                    break;
+                default:
+                    GanttBehavior = null;
+                    break;
+            }
         }
+
+        #region EventHandlers
 
         private void leftScroll_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
             e.Handled = true;
-        }
-
-        private void UscGanttDiagram_OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            if (DataContext is GanttDiagramViewModelBase diagramViewModel)
-            {
-                this.Visibility = Visibility.Visible;
-                //(DataContext as GraphBaseViewModel).ScaleStep = ScaleStep;
-                ScaleStep = diagramViewModel.ScaleStep;
-                diagramViewModel.uscGanttDiagram = this;
-                diagramViewModel.CalculateScaleValues(graph.ActualWidth);
-            }
-            else
-            {
-                this.Visibility = Visibility.Hidden;
-            }
         }
 
         private void MainGrid_OnPreviewMouseWheel(object sender, MouseWheelEventArgs e)
@@ -155,5 +287,15 @@ namespace WpfControlsLibrary.GanttDiagram
             if (DataContext is GanttDiagramViewModelBase ganttDiagramViewModel)
                 ganttDiagramViewModel.CalculateScaleValues(graph.ActualWidth);
         }
+
+        private void UpdateDiagrammViewModel()
+        {
+            if (GanttBehavior != null && ItemsSource != null)
+            {
+                GanttBehavior.TrySetItems(ItemsSource);
+            }
+        }
+
+        #endregion
     }
 }

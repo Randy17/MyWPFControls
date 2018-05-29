@@ -3,6 +3,8 @@ using WpfControlsLibrary.Infrastrucrure;
 
 namespace WpfControlsLibrary.GanttDiagram.ViewModels
 {
+    internal delegate void IsSelectedDelegate(GanttItemViewModelBase sender);
+
     public class GanttItemViewModelBase : ViewModelBase
     {
         #region Fields
@@ -63,8 +65,13 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels
             }
             set
             {
-                _isSelected = value;
-                RaisePropertyChanged(nameof(IsSelected));
+                if (_isSelected != value)
+                {
+                    _isSelected = value;
+                    RaisePropertyChanged(nameof(IsSelected));
+                    if(_isSelected)
+                        IsSelectedChanged(this);
+                }
             }
         }
         public virtual int ScaleStep
@@ -95,6 +102,12 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels
             }
         }
         public object Content { get; set; }
+        #endregion
+
+        #region Events
+
+        internal event IsSelectedDelegate IsSelectedChanged = delegate { };
+
         #endregion
 
         public GanttItemViewModelBase(GanttRowViewModelBase parentRow)

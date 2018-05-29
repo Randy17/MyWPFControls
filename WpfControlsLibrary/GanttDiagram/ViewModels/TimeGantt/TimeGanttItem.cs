@@ -1,8 +1,9 @@
 ﻿using System;
+using WpfControlsLibrary.GanttDiagram.Models;
 
 namespace WpfControlsLibrary.GanttDiagram.ViewModels.TimeGantt
 {
-    public class TimeGanttItem
+    public class TimeGanttItem : IGanttItem
     {
         public DateTime StartTime
         {
