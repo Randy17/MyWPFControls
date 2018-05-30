@@ -192,15 +192,15 @@ namespace WpfControlsLibrary.GanttDiagram
 
         #region SelectedItem
 
-        public object SelectedItem
+        public IGanttItem SelectedItem
         {
-            get { return (object)GetValue(SelectedItemProperty); }
+            get { return (IGanttItem)GetValue(SelectedItemProperty); }
             set { SetValue(SelectedItemProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for SelectedItem.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SelectedItemProperty =
-            DependencyProperty.Register("SelectedItem", typeof(object), typeof(uscGanttDiagram), new PropertyMetadata(null));
+            DependencyProperty.Register("SelectedItem", typeof(IGanttItem), typeof(uscGanttDiagram), new PropertyMetadata(null));
 
         #endregion
 
@@ -267,6 +267,7 @@ namespace WpfControlsLibrary.GanttDiagram
 
         private void RightScroll_OnScrollChanged(object sender, ScrollChangedEventArgs e)
         {
+            // ReSharper disable once CompareOfFloatsByEqualityOperator
             if (e.VerticalChange != 0)
             {
                 leftScroll.ScrollToVerticalOffset(e.VerticalOffset);

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
@@ -175,55 +174,12 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels.TimeGantt
         #endregion
         
 
-        public TimeGanttDiagramViewModel() : base()
+        public TimeGanttDiagramViewModel()
         {
             LeftRangeSelectorPosition = 0;
             IsRangeSelectorVisible = true;
             MaxScaleStepValue = 400;
             IsVisible = false;
-            Rows.CollectionChanged += Rows_CollectionChanged;
-        }
-
-        public TimeGanttDiagramViewModel(ICollection<TimeGanttItem> items) : base()
-        {
-            LeftRangeSelectorPosition = 0;
-            IsRangeSelectorVisible = true;
-            MaxScaleStepValue = 400;
-            if (items != null && items.Count > 0)
-            {
-                IsVisible = true;
-                StartTime = items.Min(i => i.StartTime);
-                StartTime = new DateTime(StartTime.Ticks - (StartTime.Ticks % _roundTicks));
-                EndTime = items.Max(i => i.EndTime);
-                EndTime = new DateTime(EndTime.Ticks + _roundTicks - (EndTime.Ticks % _roundTicks));
-                TimeSpan minDuration = items.Min(i => i.Duration);
-                ScaleTimeSpan = EndTime - StartTime;
-                _scaleStepTicks = TimeSpan.FromMinutes(Math.Ceiling((ScaleTimeSpan.TotalMinutes / 5f / 10)) * 10).Ticks;
-
-                _minScaleStepTicks = TimeSpan.FromMinutes(10).Ticks;
-                _maxScaleStepTicks = TimeSpan.FromHours(1).Ticks;
-                ScaleResolution = _scaleStepTicks / (double)ScaleStep;
-
-                StartRangeTime = StartTime.AddTicks((long)(LeftRangeSelectorPosition * ScaleResolution));
-                EndRangeTime = StartTime.AddTicks((long)((LeftRangeSelectorPosition + RangeWidth) * ScaleResolution));
-
-                double maxResolution = minDuration.Ticks / 10f;
-                if (maxResolution < ScaleResolution)
-                {
-                    MaxScaleStepValue = (int)(_scaleStepTicks / maxResolution);
-                }
-            }
-            else
-            {
-                IsVisible = false;
-            }
-
-            
-            foreach (var item in items)
-            {
-                AddItemToGraph(item);
-            }
-
             Rows.CollectionChanged += Rows_CollectionChanged;
         }
 
@@ -280,7 +236,7 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels.TimeGantt
                                                                 System.Globalization.CultureInfo.CurrentCulture,
                                                                 System.Windows.FlowDirection.LeftToRight,
                                                                 new Typeface("Sergoe UI"),
-                                                                12, System.Windows.Media.Brushes.Black);
+                                                                12, Brushes.Black);
                 if (i == 0)
                     sv.Margin = 0;
                 else
@@ -299,7 +255,7 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels.TimeGantt
             return false;
         }
 
-        private void Items_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private void Items_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == NotifyCollectionChangedAction.Add)
             {

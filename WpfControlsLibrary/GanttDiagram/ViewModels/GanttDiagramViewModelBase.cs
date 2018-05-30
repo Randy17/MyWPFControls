@@ -13,6 +13,7 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels
         #region Fields
 
         private int _scaleStep = 200;
+        // ReSharper disable once InconsistentNaming
         protected bool _isVisible;
         private string _serviceMessage;
         private int _maxWidth = 20075;
@@ -191,8 +192,10 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels
         {
             if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
             {
-                (e.NewItems[0] as GanttRowViewModelBase).Position = Rows.Count;
-                GanttRowViewModelBase row = (e.NewItems[0] as GanttRowViewModelBase);
+                if (e.NewItems[0] is GanttRowViewModelBase row)
+                {
+                    row.Position = Rows.Count;
+                }
                 IsVisible = true;
                 GraphUpdated(this, new EventArgs());
             }
@@ -215,12 +218,11 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels
             {
                 ScaleValue sv = new ScaleValue();
                 sv.Value = string.Format("Этап {0}", i + 1);
-                FormattedText formattedText = new FormattedText(sv.Value.ToString(),
+                FormattedText formattedText = new FormattedText(sv.Value,
                     System.Globalization.CultureInfo.CurrentCulture,
                     System.Windows.FlowDirection.LeftToRight,
                     new Typeface("Sergoe UI"),
-                    12, System.Windows.Media.Brushes.Black);
-                double textWidth = formattedText.Width;
+                    12, Brushes.Black);
                 //sv.Margin = ScaleStep * (i + 1) - (int)formattedText.Width / 2;
                 sv.Margin = ScaleStep * i + (ScaleStep / 2 - (int)formattedText.Width / 2);
                 ScaleValues.Add(sv);
