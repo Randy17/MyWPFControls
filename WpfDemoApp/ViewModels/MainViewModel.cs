@@ -167,10 +167,10 @@ namespace WpfDemoApp.ViewModels
         private void RefreshGantt(object obj)
         {
             //InitGantt();
-            GanttItems = new ObservableCollection<TimeGanttItem>();
+            //GanttItems = new ObservableCollection<ScheduleResultItem>();
             //GanttViewModel.Items = GanttItems;
 
-            //GanttItems.Add(new TimeGanttItem(DateTime.Now.Subtract(TimeSpan.FromMinutes(15)), GanttItems.FirstOrDefault().StartTime, "Row 4", "Item 6"));
+            GanttItems.Add(new TimeGanttItem(DateTime.Now.Subtract(TimeSpan.FromMinutes(15)), GanttItems.FirstOrDefault().StartTime, "Row 4", "Item 6"));
             //RaisePropertyChanged(nameof(GanttItems));
         }
     }

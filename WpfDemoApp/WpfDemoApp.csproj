@@ -62,6 +62,7 @@
     <Compile Include="Infrastructure\Command.cs" />
     <Compile Include="Infrastructure\ViewModelBase.cs" />
     <Compile Include="Models\DemoContextMenuCommand.cs" />
+    <Compile Include="ViewModels\ScheduleResultItem.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

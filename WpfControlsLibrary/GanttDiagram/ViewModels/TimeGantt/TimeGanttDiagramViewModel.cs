@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Windows.Media;
+using WpfControlsLibrary.GanttDiagram.Models;
 
 namespace WpfControlsLibrary.GanttDiagram.ViewModels.TimeGantt
 {
@@ -250,14 +252,32 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels.TimeGantt
             }
         }
 
-        public override bool TrySetItems(object newItems)
+        public override bool TrySetItems(IList newItems)
         {
-            if (newItems is ObservableCollection<TimeGanttItem> newTimeGanttItems)
+            var type = newItems.GetType();
+            if (typeof(TimeGanttItem).IsAssignableFrom(type.GenericTypeArguments[0]))
             {
-                Items = newTimeGanttItems;
+                Items = new ObservableCollection<TimeGanttItem>(newItems.Cast<TimeGanttItem>());
                 return true;
             }
+
             return false;
+        }
+
+        public override void AddItem(IGanttItem newItem)
+        {
+            if (newItem is TimeGanttItem timeGanttItem)
+            {
+                Items.Add(timeGanttItem);
+            }
+        }
+
+        public override void RemoveItem(IGanttItem item)
+        {
+            if (item is TimeGanttItem timeGanttItem)
+            {
+                Items.Remove(timeGanttItem);
+            }
         }
 
         private void Items_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -283,7 +303,6 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels.TimeGantt
                     SelectedItem = timeGanttItem.Content as TimeGanttItem;
                     _selectedGanttItemViewModelBase = timeGanttItem;
                 }
-
             }
         }
     }

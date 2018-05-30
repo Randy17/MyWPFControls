@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.ObjectModel;
 using WpfControlsLibrary.GanttDiagram.Models;
 
@@ -31,8 +32,6 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels.Interfaces
         bool IsRangeSelectorVisible { get; set; }
         double LeftRangeSelectorPosition { get; set; }
         double RangeWidth { get; set; }
-        ObservableCollection<IGanttItem> Items { get; }
-        IGanttItem SelectedItem { get; }
 
         #endregion
 
@@ -40,7 +39,10 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels.Interfaces
 
         void CalculateScaleValues(double graphWidth);
 
-        bool TrySetItems(object newItems);
+        bool TrySetItems(IList newItems);
+
+        void AddItem(IGanttItem newItem);
+        void RemoveItem(IGanttItem item);
 
         #endregion
     }

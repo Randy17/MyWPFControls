@@ -42,7 +42,7 @@
                 <Setter Property="BorderThickness" Value="1" />
                 <Style.Triggers>
                     <DataTrigger Binding="{Binding IsSelected}" Value="True">
-                        <Setter Property="BorderThickness" Value="2"></Setter>
+                        <Setter Property="BorderThickness" Value="1.5"></Setter>
                         <Setter Property="Background" Value="{Binding SelectedItemBackground, RelativeSource={RelativeSource FindAncestor, AncestorType=local:uscGanttDiagram}}"></Setter>
                     </DataTrigger>
                 </Style.Triggers>

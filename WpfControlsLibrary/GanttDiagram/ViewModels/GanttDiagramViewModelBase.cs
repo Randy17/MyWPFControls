@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.ObjectModel;
 using System.Windows.Media;
 using WpfControlsLibrary.GanttDiagram.Models;
@@ -164,9 +165,7 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels
             }
         }
         public virtual ObservableCollection<TGanttItem> Items { get; protected set; }
-        ObservableCollection<IGanttItem> IGanttDiagramViewModel.Items => Items as ObservableCollection<IGanttItem>;
         public virtual TGanttItem SelectedItem { get; set; }
-        IGanttItem IGanttDiagramViewModel.SelectedItem => SelectedItem;
 
         #endregion
 
@@ -228,9 +227,19 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels
                 ScaleValues.Add(sv);
             }
         }
-        public virtual bool TrySetItems(object newItems)
+        public virtual bool TrySetItems(IList newItems)
         {
             return true;
+        }
+
+        public virtual void AddItem(IGanttItem newItem)
+        {
+            throw new NotImplementedException();
+        }
+        
+        public virtual void RemoveItem(IGanttItem item)
+        {
+            throw new NotImplementedException();
         }
 
         protected void RaiseSelectedItemChanged(TGanttItem newSelectedItem)

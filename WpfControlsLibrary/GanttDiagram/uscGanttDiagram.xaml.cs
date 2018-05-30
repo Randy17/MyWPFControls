@@ -1,5 +1,8 @@
 ﻿using System.Collections;
+using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -186,8 +189,36 @@ namespace WpfControlsLibrary.GanttDiagram
                     if (o is uscGanttDiagram ganttDiagram)
                     {
                         ganttDiagram.UpdateDiagrammViewModel();
+
+                        if (args.OldValue is INotifyCollectionChanged oldObservableCollection)
+                        {
+                            oldObservableCollection.CollectionChanged -= ganttDiagram.ItemsSource_CollectionChanged;
+                        }
+
+                        if (args.NewValue is INotifyCollectionChanged newObservableCollection)
+                        {
+                            newObservableCollection.CollectionChanged += ganttDiagram.ItemsSource_CollectionChanged;
+                        }
                     }
                 }));
+
+        private void ItemsSource_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                foreach (var newItem in e.NewItems.OfType<IGanttItem>())
+                {
+                    GanttBehavior.AddItem(newItem);
+                }
+            }
+            else if (e.Action == NotifyCollectionChangedAction.Remove)
+            {
+                foreach (var oldItem in e.OldItems.OfType<IGanttItem>())
+                {
+                    GanttBehavior.RemoveItem(oldItem);
+                }
+            }
+        }
 
         #endregion
 
@@ -251,7 +282,10 @@ namespace WpfControlsLibrary.GanttDiagram
         {
             if (GanttBehavior != null && ItemsSource != null)
             {
-                GanttBehavior.TrySetItems(ItemsSource);
+                if (!GanttBehavior.TrySetItems(ItemsSource))
+                {
+                    Debug.WriteLine($"uscGanttDiagramm: Cannot set items of type {ItemsSource.GetType()} to ItemsSource property");
+                }
             }
         }
 
