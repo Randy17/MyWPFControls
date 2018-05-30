@@ -19,6 +19,7 @@ namespace WpfDemoApp.ViewModels
         private const string CONFIG_FILE_PATH = "menuConfig.json";
 
         private TimeGanttItem _selectedGanttItem;
+        private ObservableCollection<TimeGanttItem> _ganttItems;
 
         public List<ContextMenuGroup> CommandsGroups
         {
@@ -30,7 +31,15 @@ namespace WpfDemoApp.ViewModels
             get;set;
         }
 
-        public ObservableCollection<TimeGanttItem> GanttItems { get; set; }
+        public ObservableCollection<TimeGanttItem> GanttItems
+        {
+            get { return _ganttItems; }
+            set
+            {
+                _ganttItems = value;
+                RaisePropertyChanged(nameof(GanttItems));
+            }
+        }
 
         public TimeGanttItem SelectedGanttItem
         {
@@ -158,9 +167,10 @@ namespace WpfDemoApp.ViewModels
         private void RefreshGantt(object obj)
         {
             //InitGantt();
+            GanttItems = new ObservableCollection<TimeGanttItem>();
             //GanttViewModel.Items = GanttItems;
 
-            GanttItems.Add(new TimeGanttItem(DateTime.Now.Subtract(TimeSpan.FromMinutes(15)), GanttItems.FirstOrDefault().StartTime, "Row 4", "Item 6"));
+            //GanttItems.Add(new TimeGanttItem(DateTime.Now.Subtract(TimeSpan.FromMinutes(15)), GanttItems.FirstOrDefault().StartTime, "Row 4", "Item 6"));
             //RaisePropertyChanged(nameof(GanttItems));
         }
     }

@@ -116,9 +116,14 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels.TimeGantt
             get { return _items; }
             protected set
             {
+                if(_items == value)
+                    return;
+
+                Rows.Clear();
+
                 _items = value;
                 RaisePropertyChanged(nameof(Items));
-                if (_items != null)
+                if (_items != null && _items.Count > 0)
                 {
                     IsVisible = true;
                     StartTime = _items.Min(i => i.StartTime);

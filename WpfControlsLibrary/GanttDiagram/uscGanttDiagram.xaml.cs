@@ -113,6 +113,7 @@ namespace WpfControlsLibrary.GanttDiagram
                             ganttDiagram.ScaleStep = diagramViewModel.ScaleStep;
                             diagramViewModel.UscGanttDiagram = ganttDiagram;
                             diagramViewModel.CalculateScaleValues(ganttDiagram.graph.ActualWidth);
+                            diagramViewModel.IsRangeSelectorVisible = ganttDiagram.IsRangeSelectorVisible;
 
                             ganttDiagram.UpdateDiagrammViewModel();
                             diagramViewModel.SelectedItemChanged += ganttDiagram.DiagramViewModelOnSelectedItemChanged;
@@ -201,6 +202,28 @@ namespace WpfControlsLibrary.GanttDiagram
         // Using a DependencyProperty as the backing store for SelectedItem.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SelectedItemProperty =
             DependencyProperty.Register("SelectedItem", typeof(IGanttItem), typeof(uscGanttDiagram), new PropertyMetadata(null));
+
+        #endregion
+
+        #region IsRangeSelectorVisible
+
+        public bool IsRangeSelectorVisible
+        {
+            get { return (bool)GetValue(IsRangeSelectorVisibleProperty); }
+            set { SetValue(IsRangeSelectorVisibleProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for IsRangeSelectorVisible.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IsRangeSelectorVisibleProperty =
+            DependencyProperty.Register("IsRangeSelectorVisible", typeof(bool), typeof(uscGanttDiagram), new PropertyMetadata(false,
+                (o, args) =>
+                {
+                    if (o is uscGanttDiagram ganttDiagram)
+                    {
+                        if (ganttDiagram.GanttBehavior != null)
+                            ganttDiagram.GanttBehavior.IsRangeSelectorVisible = (bool) args.NewValue;
+                    }
+                } ));
 
         #endregion
 
