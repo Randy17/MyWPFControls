@@ -1,6 +1,6 @@
 ﻿namespace WpfControlsLibrary.GanttDiagram.ViewModels.TimeGantt
 {
-    public sealed class TimeGanttItemViewModel : GanttItemViewModelBase
+    internal sealed class TimeGanttItemViewModel : GanttItemViewModelBase
     {
         private readonly TimeGanttItem _contentItem;
 
@@ -31,6 +31,12 @@
 
             StartPosition = (int)((item.StartTime - ((TimeGanttDiagramViewModel) parentRow.GanttDiagram).StartTime).Ticks / ((TimeGanttDiagramViewModel) parentRow.GanttDiagram).ScaleResolution);
             Duration = (int)((item.EndTime - item.StartTime).Ticks / ((TimeGanttDiagramViewModel) parentRow.GanttDiagram).ScaleResolution);
+        }
+
+        public override void RecalculatePosition()
+        {
+            StartPosition = (int)((_contentItem.StartTime - ((TimeGanttDiagramViewModel)GanttRow.GanttDiagram).StartTime).Ticks / ((TimeGanttDiagramViewModel)GanttRow.GanttDiagram).ScaleResolution);
+            Duration = (int)((_contentItem.EndTime - _contentItem.StartTime).Ticks / ((TimeGanttDiagramViewModel)GanttRow.GanttDiagram).ScaleResolution);
         }
     }
 }

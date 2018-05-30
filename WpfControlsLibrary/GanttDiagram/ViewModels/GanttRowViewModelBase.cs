@@ -1,13 +1,14 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
+using WpfControlsLibrary.GanttDiagram.ViewModels.Interfaces;
 using WpfControlsLibrary.Infrastrucrure;
 
 namespace WpfControlsLibrary.GanttDiagram.ViewModels
 {
-    public class GanttRowViewModelBase : ViewModelBase
+    internal class GanttRowViewModelBase : ViewModelBase
     {
         #region Fields
-        protected GanttDiagramViewModelBase _ganttDiagram;
+        protected IGanttDiagramViewModel _ganttDiagram;
         private string _addItemToolTip;
         private string _deleteRowToolTip;
         private bool _isShrinked;
@@ -51,7 +52,7 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels
                 RaisePropertyChanged(nameof(DeleteRowToolTip));
             }
         }
-        public GanttDiagramViewModelBase GanttDiagram
+        public IGanttDiagramViewModel GanttDiagram
         {
             get
             {
@@ -112,7 +113,7 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels
         }
         #endregion
 
-        public GanttRowViewModelBase(string caption, GanttDiagramViewModelBase parentGraphBase, int position = 0)
+        public GanttRowViewModelBase(string caption, IGanttDiagramViewModel parentGraphBase, int position = 0)
         {
             Caption = caption;
             Items = new ObservableCollection<GanttItemViewModelBase>();

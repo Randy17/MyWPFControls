@@ -110,6 +110,7 @@
     <Compile Include="GanttDiagram\ViewModels\GanttItemViewModelBase.cs" />
     <Compile Include="GanttDiagram\ViewModels\GanttDiagramViewModelBase.cs" />
     <Compile Include="GanttDiagram\ViewModels\GanttRowViewModelBase.cs" />
+    <Compile Include="GanttDiagram\ViewModels\Interfaces\IGanttDiagramViewModel.cs" />
     <Compile Include="GanttDiagram\ViewModels\ScaleValue.cs" />
     <Compile Include="GanttDiagram\ViewModels\TimeGantt\TimeGanttDiagramViewModel.cs" />
     <Compile Include="GanttDiagram\ViewModels\TimeGantt\TimeGanttItem.cs" />

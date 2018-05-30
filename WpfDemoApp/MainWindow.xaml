@@ -92,17 +92,23 @@
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <gantt:uscGanttDiagram CanEdit="False" SelectedItemBackground="DarkSalmon" ItemsSource="{Binding GanttItems}" >
+                <gantt:uscGanttDiagram CanEdit="False" SelectedItemBackground="DarkSalmon" ItemsSource="{Binding GanttItems}" SelectedItem="{Binding SelectedGanttItem, Mode=TwoWay}" >
                 </gantt:uscGanttDiagram>
+                
+                <StackPanel Grid.Row="1" Orientation="Horizontal">
+                    <TextBlock>Selected gantt item:</TextBlock>
+                    <TextBlock Text="{Binding SelectedGanttItem.Name}"></TextBlock>
+                </StackPanel>
 
-                <TextBlock Grid.Row="1" Text="Long text Long textLong text Long textLong text" TextWrapping="Wrap" Width="100" Height="40">
+                <TextBlock Grid.Row="2" Text="Long text Long textLong text Long textLong text" TextWrapping="Wrap" Width="100" Height="40">
                     <i:Interaction.Behaviors>
                         <behaviors:AutoTooltipTextBlockBehavior></behaviors:AutoTooltipTextBlockBehavior>
                     </i:Interaction.Behaviors>
                 </TextBlock>
 
-                <Button Grid.Row="1" HorizontalAlignment="Left" Command="{Binding RefreshGanttCmd}" >Refresh</Button>
+                <Button Grid.Row="2" HorizontalAlignment="Left" Command="{Binding RefreshGanttCmd}" >Refresh</Button>
             </Grid>
         </TabItem>
     </TabControl>

@@ -7,12 +7,13 @@ using System.Windows.Media;
 
 namespace WpfControlsLibrary.GanttDiagram.ViewModels.TimeGantt
 {
-    public class TimeGanttDiagramViewModel : GanttDiagramViewModelBase
+    internal class TimeGanttDiagramViewModel : GanttDiagramViewModelBase<TimeGanttItem>
     {
         #region Fields
         private long _minScaleStepTicks;
         private long _maxScaleStepTicks;
         private long _scaleStepTicks;
+        private long _roundTicks = TimeSpan.FromMinutes(10).Ticks;
         private DateTime _startRangeTime;
         private DateTime _endRangeTime;
         private ObservableCollection<TimeGanttItem> _items;
@@ -111,22 +112,21 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels.TimeGantt
             }
         }
 
-        public ObservableCollection<TimeGanttItem> Items
+        public override ObservableCollection<TimeGanttItem> Items
         {
             get { return _items; }
-            private set
+            protected set
             {
                 _items = value;
                 RaisePropertyChanged(nameof(Items));
                 if (_items != null)
                 {
                     IsVisible = true;
-                    long roundTicks = TimeSpan.FromMinutes(10).Ticks;
                     StartTime = _items.Min(i => i.StartTime);
-                    StartTime = new DateTime(StartTime.Ticks - (StartTime.Ticks % roundTicks));
+                    StartTime = new DateTime(StartTime.Ticks - (StartTime.Ticks % _roundTicks));
                     EndTime = _items.Max(i => i.EndTime);
-                    EndTime = new DateTime(EndTime.Ticks + roundTicks - (EndTime.Ticks % roundTicks));
-                    TimeSpan minDuration = _items.Min(i => i.Duration);
+                    EndTime = new DateTime(EndTime.Ticks + _roundTicks - (EndTime.Ticks % _roundTicks));
+                    TimeSpan minDuration = _items.Where(i => i.Duration > TimeSpan.FromSeconds(0)). Min(i => i.Duration);
                     ScaleTimeSpan = EndTime - StartTime;
                     _scaleStepTicks = TimeSpan.FromMinutes(Math.Ceiling((ScaleTimeSpan.TotalMinutes / 5f / 10)) * 10).Ticks;
 
@@ -143,14 +143,13 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels.TimeGantt
                         MaxScaleStepValue = (int)(_scaleStepTicks / maxResolution);
                     }
 
-
                     foreach (var timeGanttItem in _items)
                     {
                         AddItemToGraph(timeGanttItem);
                     }
                     _items.CollectionChanged += Items_CollectionChanged;
 
-                    CalculateScaleValues(uscGanttDiagram.graph.ActualWidth);
+                    CalculateScaleValues(UscGanttDiagram.graph.ActualWidth);
                 }
                 else
                 {
@@ -159,17 +158,22 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels.TimeGantt
             }
         }
 
-        public TimeGanttItem SelectedItem
+        public override TimeGanttItem SelectedItem
         {
             get { return _selectedItem; }
             set
             {
-                _selectedItem = value;
-                RaisePropertyChanged(nameof(SelectedItem));
+                if (_selectedItem != value)
+                {
+                    _selectedItem = value;
+                    RaisePropertyChanged(nameof(SelectedItem));
+                    RaiseSelectedItemChanged(_selectedItem);
+                }
             }
         }
 
         #endregion
+        
 
         public TimeGanttDiagramViewModel() : base()
         {
@@ -188,11 +192,10 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels.TimeGantt
             if (items != null && items.Count > 0)
             {
                 IsVisible = true;
-                long roundTicks = TimeSpan.FromMinutes(10).Ticks;
                 StartTime = items.Min(i => i.StartTime);
-                StartTime = new DateTime(StartTime.Ticks - (StartTime.Ticks % roundTicks));
+                StartTime = new DateTime(StartTime.Ticks - (StartTime.Ticks % _roundTicks));
                 EndTime = items.Max(i => i.EndTime);
-                EndTime = new DateTime(EndTime.Ticks + roundTicks - (EndTime.Ticks % roundTicks));
+                EndTime = new DateTime(EndTime.Ticks + _roundTicks - (EndTime.Ticks % _roundTicks));
                 TimeSpan minDuration = items.Min(i => i.Duration);
                 ScaleTimeSpan = EndTime - StartTime;
                 _scaleStepTicks = TimeSpan.FromMinutes(Math.Ceiling((ScaleTimeSpan.TotalMinutes / 5f / 10)) * 10).Ticks;
@@ -226,6 +229,30 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels.TimeGantt
 
         private void AddItemToGraph(TimeGanttItem item)
         {
+            bool needRecalculateScale = false;
+            if (item.StartTime < StartTime)
+            {
+                StartTime = new DateTime(item.StartTime.Ticks - (item.StartTime.Ticks % _roundTicks));
+
+                foreach (var ganttItem in Rows.SelectMany(r => r.Items))
+                {
+                    ganttItem.RecalculatePosition();
+                }
+
+                needRecalculateScale = true;
+            }
+
+            if (item.EndTime > EndTime)
+            {
+                EndTime = new DateTime(item.EndTime.Ticks + _roundTicks - (item.EndTime.Ticks % _roundTicks));
+                needRecalculateScale = true;
+            }
+
+            if (needRecalculateScale)
+            {
+                CalculateScaleValues(UscGanttDiagram.graph.ActualWidth);
+            }
+
             GanttRowViewModelBase row = Rows.FirstOrDefault(r => r.Caption == item.RowName);
 
             if (row == null)
@@ -239,7 +266,7 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels.TimeGantt
             row.Items.Add(rowItem);
         }
 
-        internal override void CalculateScaleValues(double graphWidth)
+        public override void CalculateScaleValues(double graphWidth)
         {
             ScaleValues.Clear();
             int border = ((int)graphWidth / ScaleStep) + 1;
@@ -249,7 +276,7 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels.TimeGantt
                 ScaleValue sv = new ScaleValue();
                 DateTime newDt = StartTime.AddTicks((long)(ScaleResolution * i * ScaleStep));
                 sv.Value = string.Format("{0:HH:mm:ss}", newDt);
-                FormattedText formattedText = new FormattedText(sv.Value.ToString(),
+                FormattedText formattedText = new FormattedText(sv.Value,
                                                                 System.Globalization.CultureInfo.CurrentCulture,
                                                                 System.Windows.FlowDirection.LeftToRight,
                                                                 new Typeface("Sergoe UI"),
@@ -262,7 +289,7 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels.TimeGantt
             }
         }
 
-        internal override bool TrySetItems(object newItems)
+        public override bool TrySetItems(object newItems)
         {
             if (newItems is ObservableCollection<TimeGanttItem> newTimeGanttItems)
             {

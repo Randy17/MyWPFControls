@@ -5,7 +5,7 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels
 {
     internal delegate void IsSelectedDelegate(GanttItemViewModelBase sender);
 
-    public class GanttItemViewModelBase : ViewModelBase
+    internal class GanttItemViewModelBase : ViewModelBase
     {
         #region Fields
         private string _caption;
@@ -137,6 +137,10 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels
         protected virtual void CopyItem(object obj)
         {
             _ganttRow.Items.Add(new GanttItemViewModelBase(_ganttRow));
+        }
+
+        public virtual void RecalculatePosition()
+        {
         }
     }
 }

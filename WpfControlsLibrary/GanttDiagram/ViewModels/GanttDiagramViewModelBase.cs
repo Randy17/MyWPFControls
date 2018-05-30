@@ -2,13 +2,16 @@
 using System.Collections.ObjectModel;
 using System.Windows.Media;
 using WpfControlsLibrary.GanttDiagram.Models;
+using WpfControlsLibrary.GanttDiagram.ViewModels.Interfaces;
 using WpfControlsLibrary.Infrastrucrure;
 
 namespace WpfControlsLibrary.GanttDiagram.ViewModels
 {
-    public class GanttDiagramViewModelBase : ViewModelBase
+    internal class GanttDiagramViewModelBase <TGanttItem> : ViewModelBase, IGanttDiagramViewModel
+        where TGanttItem : IGanttItem
     {
         #region Fields
+
         private int _scaleStep = 200;
         protected bool _isVisible;
         private string _serviceMessage;
@@ -18,12 +21,11 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels
         private bool _isRangeSelectorVisible;
         private double _leftRangeSelectorPosition;
         private double _rangeWidth;
+
         #endregion
 
-        public event EventHandler ScaleStepChanged = delegate { };
-        public event EventHandler GraphUpdated = delegate { };
-
         #region Properties
+
         public virtual bool IsVisible
         {
             get
@@ -52,7 +54,7 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels
                 RaisePropertyChanged(nameof(ServiceMessage));
             }
         }
-        internal uscGanttDiagram uscGanttDiagram;
+        public uscGanttDiagram UscGanttDiagram { get; set; }
         public virtual int ScaleStep
         {
             get
@@ -65,9 +67,9 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels
                 MaxWidth = _scaleStep * 100;
                 RaisePropertyChanged(nameof(ScaleStep));
                 ScaleStepChanged(this, new EventArgs());
-                if (uscGanttDiagram != null)
+                if (UscGanttDiagram != null)
                 {
-                    CalculateScaleValues(uscGanttDiagram.graph.ActualWidth);
+                    CalculateScaleValues(UscGanttDiagram.graph.ActualWidth);
                 }
             }
         }
@@ -160,8 +162,18 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels
                 RaisePropertyChanged(nameof(RangeWidth));
             }
         }
+        public virtual ObservableCollection<TGanttItem> Items { get; protected set; }
+        ObservableCollection<IGanttItem> IGanttDiagramViewModel.Items => Items as ObservableCollection<IGanttItem>;
+        public virtual TGanttItem SelectedItem { get; set; }
+        IGanttItem IGanttDiagramViewModel.SelectedItem => SelectedItem;
 
-        public virtual ObservableCollection<IGanttItem> Items { get; private set; }
+        #endregion
+
+        #region Events
+
+        public event EventHandler ScaleStepChanged = delegate { };
+        public event EventHandler GraphUpdated = delegate { };
+        public event SelectedItemChangedDelegate SelectedItemChanged = delegate { };
 
         #endregion
 
@@ -174,6 +186,7 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels
         }
 
         #region Methods
+
         protected virtual void Rows_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
@@ -193,7 +206,7 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels
                 GraphUpdated(this, new EventArgs());
             }
         }
-        internal virtual void CalculateScaleValues(double graphWidth)
+        public virtual void CalculateScaleValues(double graphWidth)
         {
             ScaleValues.Clear();
             //ScaleValues.Add(new ScaleValue() { Value = 0, Margin = 0 });
@@ -213,11 +226,16 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels
                 ScaleValues.Add(sv);
             }
         }
-
-        internal virtual bool TrySetItems(object newItems)
+        public virtual bool TrySetItems(object newItems)
         {
             return true;
         }
+
+        protected void RaiseSelectedItemChanged(TGanttItem newSelectedItem)
+        {
+            SelectedItemChanged(newSelectedItem);
+        }
+
         #endregion
     }
 }

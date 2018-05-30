@@ -1,22 +1,11 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using WpfControlsLibrary.GanttDiagram.Models;
-using WpfControlsLibrary.GanttDiagram.ViewModels;
+using WpfControlsLibrary.GanttDiagram.ViewModels.Interfaces;
 using WpfControlsLibrary.GanttDiagram.ViewModels.TimeGantt;
 
 namespace WpfControlsLibrary.GanttDiagram
@@ -31,6 +20,7 @@ namespace WpfControlsLibrary.GanttDiagram
         #endregion
 
         #region Dependency Properties
+
         #region ScaleStep
         public int ScaleStep
         {
@@ -99,27 +89,34 @@ namespace WpfControlsLibrary.GanttDiagram
         #region GanttBehavior
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        internal GanttDiagramViewModelBase GanttBehavior
+        internal IGanttDiagramViewModel GanttBehavior
         {
-            get { return (GanttDiagramViewModelBase)GetValue(GanttBehaviorProperty); }
+            get { return (IGanttDiagramViewModel)GetValue(GanttBehaviorProperty); }
             set { SetValue(GanttBehaviorProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for GanttBehavior.  This enables animation, styling, binding, etc...
         internal static readonly DependencyProperty GanttBehaviorProperty =
-            DependencyProperty.Register("GanttBehavior", typeof(GanttDiagramViewModelBase), typeof(uscGanttDiagram), new PropertyMetadata(null,
+            DependencyProperty.Register("GanttBehavior", typeof(IGanttDiagramViewModel), typeof(uscGanttDiagram), new PropertyMetadata(null,
                 (o, args) =>
                 {
                     if (o is uscGanttDiagram ganttDiagram)
                     {
-                        GanttDiagramViewModelBase diagramViewModel = args.NewValue as GanttDiagramViewModelBase;
-                        ganttDiagram.Visibility = Visibility.Visible;
-                        //(DataContext as GraphBaseViewModel).ScaleStep = ScaleStep;
-                        ganttDiagram.ScaleStep = diagramViewModel.ScaleStep;
-                        diagramViewModel.uscGanttDiagram = ganttDiagram;
-                        diagramViewModel.CalculateScaleValues(ganttDiagram.graph.ActualWidth);
+                        if (args.OldValue is IGanttDiagramViewModel oldDiagramViewModel)
+                        {
+                            oldDiagramViewModel.SelectedItemChanged -= ganttDiagram.DiagramViewModelOnSelectedItemChanged;
+                        }
 
-                        ganttDiagram.UpdateDiagrammViewModel();
+                        if (args.NewValue is IGanttDiagramViewModel diagramViewModel)
+                        {
+                            ganttDiagram.Visibility = Visibility.Visible;
+                            ganttDiagram.ScaleStep = diagramViewModel.ScaleStep;
+                            diagramViewModel.UscGanttDiagram = ganttDiagram;
+                            diagramViewModel.CalculateScaleValues(ganttDiagram.graph.ActualWidth);
+
+                            ganttDiagram.UpdateDiagrammViewModel();
+                            diagramViewModel.SelectedItemChanged += ganttDiagram.DiagramViewModelOnSelectedItemChanged;
+                        }
                     }
                 }));
 
@@ -187,14 +184,9 @@ namespace WpfControlsLibrary.GanttDiagram
                 {
                     if (o is uscGanttDiagram ganttDiagram)
                     {
-                        ganttDiagram.ItemsSourceChanged(args.OldValue, args.NewValue);
+                        ganttDiagram.UpdateDiagrammViewModel();
                     }
                 }));
-
-        private void ItemsSourceChanged(object oldValue, object newValue)
-        {
-            UpdateDiagrammViewModel();
-        }
 
         #endregion
 
@@ -230,6 +222,18 @@ namespace WpfControlsLibrary.GanttDiagram
             }
         }
 
+        #region Methods
+
+        private void UpdateDiagrammViewModel()
+        {
+            if (GanttBehavior != null && ItemsSource != null)
+            {
+                GanttBehavior.TrySetItems(ItemsSource);
+            }
+        }
+
+        #endregion
+        
         #region EventHandlers
 
         private void leftScroll_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
@@ -284,16 +288,12 @@ namespace WpfControlsLibrary.GanttDiagram
 
         private void Graph_OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (DataContext is GanttDiagramViewModelBase ganttDiagramViewModel)
-                ganttDiagramViewModel.CalculateScaleValues(graph.ActualWidth);
+            GanttBehavior?.CalculateScaleValues(graph.ActualWidth);
         }
 
-        private void UpdateDiagrammViewModel()
+        private void DiagramViewModelOnSelectedItemChanged(IGanttItem newSelecteditem)
         {
-            if (GanttBehavior != null && ItemsSource != null)
-            {
-                GanttBehavior.TrySetItems(ItemsSource);
-            }
+            SelectedItem = newSelecteditem;
         }
 
         #endregion
