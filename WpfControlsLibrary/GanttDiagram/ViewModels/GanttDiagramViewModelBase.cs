@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Media;
 using WpfControlsLibrary.GanttDiagram.Models;
 using WpfControlsLibrary.GanttDiagram.ViewModels.Interfaces;
@@ -23,6 +24,8 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels
         private bool _isRangeSelectorVisible;
         private double _leftRangeSelectorPosition;
         private double _rangeWidth;
+        private bool _isAllRowsShrinked;
+        private bool _isAllRowsShrinkedFlagUpdating = false;
 
         private Command _shrinkAllRowsCmd;
         private Command _unshrinkAllRowsCmd;
@@ -167,6 +170,19 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels
                 RaisePropertyChanged(nameof(RangeWidth));
             }
         }
+        public bool IsAllRowsShrinked
+        {
+            get { return _isAllRowsShrinked; }
+            set
+            {
+                if (_isAllRowsShrinked != value)
+                {
+                    _isAllRowsShrinked = value;
+                    RaisePropertyChanged(nameof(IsAllRowsShrinked));
+                }
+            }
+        }
+
         public virtual ObservableCollection<TGanttItem> Items { get; protected set; }
         public virtual TGanttItem SelectedItem { get; set; }
 
@@ -226,12 +242,18 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels
                 if (e.NewItems[0] is GanttRowViewModelBase row)
                 {
                     row.Position = Rows.Count;
+                    row.IsRowShrinkedChanged += RowOnIsRowShrinkedChanged;
                 }
                 IsVisible = true;
                 GraphUpdated(this, new EventArgs());
             }
             else if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove)
             {
+                if (e.OldItems[0] is GanttRowViewModelBase row)
+                {
+                    row.IsRowShrinkedChanged -= RowOnIsRowShrinkedChanged;
+                }
+
                 for (int i = 0; i < Rows.Count; i++)
                 {
                     Rows[i].Position = i + 1;
@@ -240,6 +262,13 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels
                 GraphUpdated(this, new EventArgs());
             }
         }
+
+        private void RowOnIsRowShrinkedChanged(bool isshrinked)
+        {
+            if(!_isAllRowsShrinkedFlagUpdating)
+                IsAllRowsShrinked = Rows.All(r => r.IsShrinked);
+        }
+
         public virtual void CalculateScaleValues(double graphWidth)
         {
             ScaleValues.Clear();
@@ -281,18 +310,24 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels
 
         private void ShrinkAllRows(object obj)
         {
+            _isAllRowsShrinkedFlagUpdating = true;
             foreach (var ganttRowViewModelBase in Rows)
             {
                 ganttRowViewModelBase.IsShrinked = true;
             }
+            IsAllRowsShrinked = true;
+            _isAllRowsShrinkedFlagUpdating = false;
         }
 
         private void UnshrinkAllRows(object obj)
         {
+            _isAllRowsShrinkedFlagUpdating = true;
             foreach (var ganttRowViewModelBase in Rows)
             {
                 ganttRowViewModelBase.IsShrinked = false;
             }
+            IsAllRowsShrinked = false;
+            _isAllRowsShrinkedFlagUpdating = false;
         }
 
         #endregion

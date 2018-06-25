@@ -258,6 +258,33 @@ namespace WpfControlsLibrary.GanttDiagram
 
         #endregion
 
+        #region IsRowsShrinked
+
+        public bool IsRowsShrinked
+        {
+            get { return (bool)GetValue(IsRowsShrinkedProperty); }
+            set { SetValue(IsRowsShrinkedProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for IsRowsShrinked.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IsRowsShrinkedProperty =
+            DependencyProperty.Register("IsRowsShrinked", typeof(bool), typeof(uscGanttDiagram), new PropertyMetadata(false,
+                (o, args) =>
+                {
+                    if (o is uscGanttDiagram ganttDiagram)
+                    {
+                        if (args.NewValue is bool isShrinked)
+                        {
+                            if(isShrinked)
+                                ganttDiagram.GanttBehavior.ShrinkAllRowsCmd.Execute(null);
+                            else
+                                ganttDiagram.GanttBehavior.UnshrinkAllRowsCmd.Execute(null);
+                        }
+                    }
+                }));
+
+        #endregion
+
         #endregion
 
         public uscGanttDiagram()

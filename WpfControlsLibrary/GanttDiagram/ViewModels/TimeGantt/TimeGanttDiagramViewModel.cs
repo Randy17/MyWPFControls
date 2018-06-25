@@ -220,7 +220,7 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels.TimeGantt
 
             if (row == null)
             {
-                row = new GanttRowViewModelBase(item.RowName, this) {Position = Rows.Count + 1};
+                row = new GanttRowViewModelBase(item.RowName, this) {Position = Rows.Count + 1, IsShrinked = IsAllRowsShrinked};
                 Rows.Add(row);
             }
 

@@ -33,6 +33,7 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels.Interfaces
         bool IsRangeSelectorVisible { get; set; }
         double LeftRangeSelectorPosition { get; set; }
         double RangeWidth { get; set; }
+        bool IsAllRowsShrinked { get; set; }
 
         #endregion
 

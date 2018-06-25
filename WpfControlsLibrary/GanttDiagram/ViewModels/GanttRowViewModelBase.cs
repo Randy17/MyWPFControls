@@ -5,6 +5,8 @@ using WpfControlsLibrary.Infrastrucrure;
 
 namespace WpfControlsLibrary.GanttDiagram.ViewModels
 {
+    internal delegate void IsRowShrinkedChanged(bool isShrinked);
+
     internal class GanttRowViewModelBase : ViewModelBase
     {
         #region Fields
@@ -16,6 +18,8 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels
         private Command _moveRowUpCmd;
         private Command _moveRowDownCmd;
         #endregion
+
+        internal event IsRowShrinkedChanged IsRowShrinkedChanged = delegate { };
 
         #region Properties
         public string Caption
@@ -74,6 +78,7 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels
             {
                 _isShrinked = value;
                 RaisePropertyChanged(nameof(IsShrinked));
+                IsRowShrinkedChanged(_isShrinked);
             }
         }
         #endregion
