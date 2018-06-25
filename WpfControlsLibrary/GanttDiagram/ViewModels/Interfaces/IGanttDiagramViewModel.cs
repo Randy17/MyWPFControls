@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.ObjectModel;
 using WpfControlsLibrary.GanttDiagram.Models;
+using WpfControlsLibrary.Infrastrucrure;
 
 namespace WpfControlsLibrary.GanttDiagram.ViewModels.Interfaces
 {
@@ -34,6 +35,9 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels.Interfaces
         double RangeWidth { get; set; }
 
         #endregion
+
+        Command ShrinkAllRowsCmd { get; }
+        Command UnshrinkAllRowsCmd { get; }
 
         #region Methods
 

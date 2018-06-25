@@ -40,8 +40,14 @@
                 <ColumnDefinition Width="200" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            
-            <ScrollViewer x:Name="leftScroll" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" Margin="0,0,0,17" PreviewMouseWheel="leftScroll_PreviewMouseWheel">
+
+            <ScrollViewer x:Name="leftScroll" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" Margin="0,0,0,17" PreviewMouseWheel="leftScroll_PreviewMouseWheel" Tag="{Binding GanttBehavior, ElementName=control}" >
+                <ScrollViewer.ContextMenu>
+                    <ContextMenu DataContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
+                        <MenuItem Command="{Binding ShrinkAllRowsCmd}" Header="Свернуть все" ></MenuItem>
+                        <MenuItem Command="{Binding UnshrinkAllRowsCmd}" Header="Развернуть все" ></MenuItem>
+                    </ContextMenu>
+                </ScrollViewer.ContextMenu>
                 <ItemsControl ItemsSource="{Binding GanttBehavior.Rows, ElementName=control}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Height="{Binding Height, ElementName=graphPanel}"
                               Margin="0,0,0,25" Width="200">
                     <ItemsControl.ItemTemplate>

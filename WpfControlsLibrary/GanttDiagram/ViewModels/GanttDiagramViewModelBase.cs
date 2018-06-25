@@ -24,6 +24,9 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels
         private double _leftRangeSelectorPosition;
         private double _rangeWidth;
 
+        private Command _shrinkAllRowsCmd;
+        private Command _unshrinkAllRowsCmd;
+
         #endregion
 
         #region Properties
@@ -177,6 +180,35 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels
 
         #endregion
 
+        #region Commands
+
+        public Command ShrinkAllRowsCmd
+        {
+            get
+            {
+                if (_shrinkAllRowsCmd == null)
+                {
+                    _shrinkAllRowsCmd = new Command(ShrinkAllRows);
+                }
+
+                return _shrinkAllRowsCmd;
+            }
+        }
+        public Command UnshrinkAllRowsCmd
+        {
+            get
+            {
+                if (_unshrinkAllRowsCmd == null)
+                {
+                    _unshrinkAllRowsCmd = new Command(UnshrinkAllRows);
+                }
+
+                return _unshrinkAllRowsCmd;
+            }
+        }
+
+        #endregion
+
         public GanttDiagramViewModelBase()
         {
             Rows = new ObservableCollection<GanttRowViewModelBase>();
@@ -245,6 +277,22 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels
         protected void RaiseSelectedItemChanged(TGanttItem newSelectedItem)
         {
             SelectedItemChanged(newSelectedItem);
+        }
+
+        private void ShrinkAllRows(object obj)
+        {
+            foreach (var ganttRowViewModelBase in Rows)
+            {
+                ganttRowViewModelBase.IsShrinked = true;
+            }
+        }
+
+        private void UnshrinkAllRows(object obj)
+        {
+            foreach (var ganttRowViewModelBase in Rows)
+            {
+                ganttRowViewModelBase.IsShrinked = false;
+            }
         }
 
         #endregion
