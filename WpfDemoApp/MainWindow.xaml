@@ -94,7 +94,13 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <gantt:uscGanttDiagram CanEdit="False" SelectedItemBackground="DarkSalmon" ItemsSource="{Binding GanttItems}" SelectedItem="{Binding SelectedGanttItem, Mode=TwoWay}" IsRowsShrinked="True" >
+                <gantt:uscGanttDiagram CanEdit="False" SelectedItemBackground="DarkSalmon" ItemsSource="{Binding GanttItems}" SelectedItem="{Binding SelectedGanttItem, Mode=TwoWay}" 
+                                       IsRowsShrinked="True" >
+                    <gantt:uscGanttDiagram.RowHeaderTemplate>
+                        <DataTemplate>
+                            <Button Content="{Binding Caption}"></Button>
+                        </DataTemplate>
+                    </gantt:uscGanttDiagram.RowHeaderTemplate>
                 </gantt:uscGanttDiagram>
                 
                 <StackPanel Grid.Row="1" Orientation="Horizontal">

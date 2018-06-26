@@ -18,7 +18,14 @@
             <ganttConverters:ScaleStepToViewPortConverter x:Key="viewportConverter"></ganttConverters:ScaleStepToViewPortConverter>
             <ganttConverters:ScaleStepToPointConverter x:Key="scalestepToPointConverter"></ganttConverters:ScaleStepToPointConverter>
             <commonConverters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"></commonConverters:BoolToVisibilityConverter>
-        </ResourceDictionary>        
+            
+            <DataTemplate x:Key="testTemplate">
+                <Grid>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Caption}" FontSize="16" 
+                               TextWrapping="Wrap" TextAlignment="Center" Margin="2" TextTrimming="CharacterEllipsis" />
+                </Grid>
+            </DataTemplate>
+        </ResourceDictionary>
     </UserControl.Resources>
     <Grid VerticalAlignment="Stretch">
         <Grid x:Name="mainGrid" Background="{Binding Background, ElementName=control}" PreviewMouseWheel="MainGrid_OnPreviewMouseWheel">
@@ -90,8 +97,22 @@
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
 
-                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Caption}" FontSize="16" 
-                                               TextWrapping="Wrap" TextAlignment="Center" Margin="2" TextTrimming="CharacterEllipsis" />
+                                    <!--<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Caption}" FontSize="16" 
+                                               TextWrapping="Wrap" TextAlignment="Center" Margin="2" TextTrimming="CharacterEllipsis" />-->
+
+                                    <ContentPresenter Content="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Center"  Margin="2" >
+                                        <ContentPresenter.Style>
+                                            <Style TargetType="ContentPresenter">
+                                                <Setter Property="ContentTemplate" Value="{Binding RowHeaderTemplate, ElementName=control}"></Setter>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding RowHeaderTemplate, ElementName=control}" Value="{x:Null}">
+                                                        <Setter Property="ContentTemplate" Value="{StaticResource testTemplate}"></Setter>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </ContentPresenter.Style>
+                                    </ContentPresenter>
+                                    
                                     <StackPanel Grid.Column="0"  HorizontalAlignment="Right" >
                                         <StackPanel.Style>
                                             <Style TargetType="StackPanel">

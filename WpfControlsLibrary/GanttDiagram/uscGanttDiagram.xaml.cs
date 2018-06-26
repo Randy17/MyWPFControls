@@ -285,6 +285,20 @@ namespace WpfControlsLibrary.GanttDiagram
 
         #endregion
 
+
+
+        public DataTemplate RowHeaderTemplate
+        {
+            get { return (DataTemplate)GetValue(RowHeaderTemplateProperty); }
+            set { SetValue(RowHeaderTemplateProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for RowHeaderTemplate.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty RowHeaderTemplateProperty =
+            DependencyProperty.Register("RowHeaderTemplate", typeof(DataTemplate), typeof(uscGanttDiagram), new PropertyMetadata(null));
+
+
+
         #endregion
 
         public uscGanttDiagram()
