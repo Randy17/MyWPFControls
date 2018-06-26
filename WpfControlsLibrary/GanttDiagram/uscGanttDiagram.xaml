@@ -13,18 +13,12 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Styles/ToggleButton.xaml" />
+                <ResourceDictionary Source="Styles/Templates.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <ganttConverters:ScaleStepToViewPortConverter x:Key="viewportConverter"></ganttConverters:ScaleStepToViewPortConverter>
             <ganttConverters:ScaleStepToPointConverter x:Key="scalestepToPointConverter"></ganttConverters:ScaleStepToPointConverter>
             <commonConverters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"></commonConverters:BoolToVisibilityConverter>
-            
-            <DataTemplate x:Key="testTemplate">
-                <Grid>
-                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Caption}" FontSize="16" 
-                               TextWrapping="Wrap" TextAlignment="Center" Margin="2" TextTrimming="CharacterEllipsis" />
-                </Grid>
-            </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid VerticalAlignment="Stretch">
@@ -106,7 +100,7 @@
                                                 <Setter Property="ContentTemplate" Value="{Binding RowHeaderTemplate, ElementName=control}"></Setter>
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding RowHeaderTemplate, ElementName=control}" Value="{x:Null}">
-                                                        <Setter Property="ContentTemplate" Value="{StaticResource testTemplate}"></Setter>
+                                                        <Setter Property="ContentTemplate" Value="{StaticResource ganttDefaultRowHeaderTemplate}"></Setter>
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>

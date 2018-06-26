@@ -98,7 +98,9 @@
                                        IsRowsShrinked="True" >
                     <gantt:uscGanttDiagram.RowHeaderTemplate>
                         <DataTemplate>
-                            <Button Content="{Binding Caption}"></Button>
+                            <Button >
+                                <TextBlock Text="{Binding Caption}" TextWrapping="WrapWithOverflow"></TextBlock>
+                            </Button>
                         </DataTemplate>
                     </gantt:uscGanttDiagram.RowHeaderTemplate>
                 </gantt:uscGanttDiagram>
