@@ -132,18 +132,26 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels.TimeGantt
                     StartTime = new DateTime(StartTime.Ticks - (StartTime.Ticks % _roundTicks));
                     EndTime = _items.Max(i => i.EndTime);
                     EndTime = new DateTime(EndTime.Ticks + _roundTicks - (EndTime.Ticks % _roundTicks));
-                    TimeSpan minDuration = _items.Where(i => i.Duration > TimeSpan.FromSeconds(0)). Min(i => i.Duration);
+                    //TimeSpan minDuration = _items.Where(i => i.Duration > TimeSpan.FromSeconds(0)). Min(i => i.Duration);
                     ScaleTimeSpan = EndTime - StartTime;
                     _scaleStepTicks = TimeSpan.FromMinutes(Math.Ceiling((ScaleTimeSpan.TotalMinutes / 5f / 10)) * 10).Ticks;
 
                     _minScaleStepTicks = TimeSpan.FromMinutes(10).Ticks;
                     _maxScaleStepTicks = TimeSpan.FromHours(1).Ticks;
+
+                    long minDurationTicks = _maxScaleStepTicks;
+                    foreach (var timeGanttItem in _items)
+                    {
+                        if (timeGanttItem.Duration > TimeSpan.Zero && timeGanttItem.Duration.Ticks < minDurationTicks)
+                            minDurationTicks = timeGanttItem.Duration.Ticks;
+                    }
+
                     ScaleResolution = _scaleStepTicks / (double)ScaleStep;
 
                     StartRangeTime = StartTime.AddTicks((long)(LeftRangeSelectorPosition * ScaleResolution));
                     EndRangeTime = StartTime.AddTicks((long)((LeftRangeSelectorPosition + RangeWidth) * ScaleResolution));
 
-                    double maxResolution = minDuration.Ticks / 10f;
+                    double maxResolution = minDurationTicks / 10f;
                     if (maxResolution < ScaleResolution)
                     {
                         MaxScaleStepValue = (int)(_scaleStepTicks / maxResolution);

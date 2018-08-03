@@ -285,7 +285,7 @@ namespace WpfControlsLibrary.GanttDiagram
 
         #endregion
 
-
+        #region RowHeaderTemplate
 
         public DataTemplate RowHeaderTemplate
         {
@@ -297,7 +297,7 @@ namespace WpfControlsLibrary.GanttDiagram
         public static readonly DependencyProperty RowHeaderTemplateProperty =
             DependencyProperty.Register("RowHeaderTemplate", typeof(DataTemplate), typeof(uscGanttDiagram), new PropertyMetadata(null));
 
-
+        #endregion
 
         #endregion
 

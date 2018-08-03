@@ -5,8 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WpfControlsLibrary.GanttDiagram"
              xmlns:ganttUI="clr-namespace:WpfControlsLibrary.GanttDiagram"
+             xmlns:ganttConverters="clr-namespace:WpfControlsLibrary.GanttDiagram.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ganttConverters:GanttItemInRowPositionToHeightConverter x:Key="ganttItemInRowPositionToHeightConverter"></ganttConverters:GanttItemInRowPositionToHeightConverter>
+        <ganttConverters:DigitGetHalfCoverter x:Key="digitGetHalfCoverter"></ganttConverters:DigitGetHalfCoverter>
+    </UserControl.Resources>
     <Grid>
         <Border BorderThickness="0,0,0,2" Padding="0,0,10,0">
             <Border.BorderBrush>
@@ -24,15 +29,15 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <ganttUI:uscGanttItem CanEdit="{Binding CanEdit, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ganttUI:uscGanttDiagram}}">
-                            <ganttUI:uscGanttItem.Style>
+                            <!--<ganttUI:uscGanttItem.Style>
                                 <Style TargetType="ganttUI:uscGanttItem">
-                                    <Setter Property="Height" Value="80" />
+                                    <Setter Property="Height" Value="{Binding InRowPosition, Converter={StaticResource ganttItemInRowPositionToHeightConverter}}" />
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding GanttRow.IsShrinked}" Value="True">
                                             <DataTrigger.EnterActions>
                                                 <BeginStoryboard>
                                                     <Storyboard>
-                                                        <DoubleAnimation Storyboard.TargetProperty="Height" To="43" Duration="0:0:0.25" />
+                                                        <DoubleAnimation Storyboard.TargetProperty="Height" To="{Binding DataContext.InRowPosition, Converter={StaticResource ganttItemInRowPositionToHeightConverter}, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ganttUI:uscGanttItem}}" Duration="0:0:0.25" />
                                                     </Storyboard>
                                                 </BeginStoryboard>
                                             </DataTrigger.EnterActions>
@@ -46,7 +51,7 @@
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
-                            </ganttUI:uscGanttItem.Style>
+                            </ganttUI:uscGanttItem.Style>-->
                         </ganttUI:uscGanttItem>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>

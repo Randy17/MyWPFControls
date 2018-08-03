@@ -5,11 +5,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WpfControlsLibrary.GanttDiagram"
              xmlns:ganttConverters="clr-namespace:WpfControlsLibrary.GanttDiagram.Converters"
+             xmlns:converters="clr-namespace:WpfControlsLibrary.Infrastrucrure.Converters"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" x:Name="control"
-             d:DesignHeight="450" d:DesignWidth="800" Width="{Binding Duration, Mode=TwoWay}" HorizontalAlignment="Left" VerticalAlignment="Bottom"
+             d:DesignHeight="450" d:DesignWidth="800" Width="{Binding Duration, Mode=TwoWay}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="{Binding Height, Mode=OneTime}"
              PreviewMouseDown="UscGanttItem_OnPreviewMouseDown" PreviewMouseUp="UscGanttItem_OnPreviewMouseUp" MouseLeave="UscGanttItem_OnMouseLeave" >
     <UserControl.Resources>
         <ganttConverters:IntToLeftMarginConverter x:Key="intToLeftMarginConverter"></ganttConverters:IntToLeftMarginConverter>
+        <ganttConverters:GenttItemInRowPositionToBottomMarginConverter x:Key="genttItemInRowPositionToBottomMarginConverter"></ganttConverters:GenttItemInRowPositionToBottomMarginConverter>
+        <ganttConverters:GanttItemInRowPositionToHeightConverter x:Key="ganttItemInRowPositionToHeightConverter"></ganttConverters:GanttItemInRowPositionToHeightConverter>
+        <converters:IntsToMarginConverter x:Key="intsToMarginConverter"></converters:IntsToMarginConverter>
 
         <ControlTemplate x:Key="ThumbTemplate">
             <Ellipse Width="{TemplateBinding Width}" Stroke="#FF817F7F" Fill="#FFC7E1FB" >
@@ -31,8 +36,31 @@
         </Style>
     </UserControl.Resources>
     <UserControl.Margin>
-        <Binding Converter="{StaticResource intToLeftMarginConverter}" Mode="TwoWay" Path="StartPosition"></Binding>
+        <!--<Binding Converter="{StaticResource intToLeftMarginConverter}" Mode="TwoWay" Path="StartPosition" ConverterParameter="{Binding InRowPosition}">-->
+        <MultiBinding Converter="{StaticResource intsToMarginConverter}" Mode="TwoWay">
+            <Binding Path="StartPosition"/>
+            <Binding>
+                <Binding.Source>
+                    <system:Int32>0</system:Int32>
+                </Binding.Source>
+            </Binding>
+            <Binding>
+                <Binding.Source>
+                    <system:Int32>0</system:Int32>
+                </Binding.Source>
+            </Binding>
+            <Binding Path="BottomMargin" />
+        </MultiBinding>
     </UserControl.Margin>
+    <UserControl.Triggers>
+        <EventTrigger RoutedEvent="Binding.TargetUpdated">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation Storyboard.TargetProperty="Height" To="{Binding Height, NotifyOnTargetUpdated=True}" Duration="0:0:0.25" />
+                    </Storyboard>
+                </BeginStoryboard>
+        </EventTrigger>
+    </UserControl.Triggers>
 
     <Border CornerRadius="3">
         <Border.Style>

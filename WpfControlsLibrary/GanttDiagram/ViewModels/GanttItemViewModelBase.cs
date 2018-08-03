@@ -1,4 +1,5 @@
 ﻿using System;
+using WpfControlsLibrary.GanttDiagram.Models;
 using WpfControlsLibrary.Infrastrucrure;
 
 namespace WpfControlsLibrary.GanttDiagram.ViewModels
@@ -14,6 +15,8 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels
         protected bool _isSelected;
         protected int _scaleStep;
         private GanttRowViewModelBase _ganttRow;
+        private double _height;
+        private int _bottomMargin;
 
         #endregion
 
@@ -102,6 +105,25 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels
             }
         }
         public object Content { get; set; }
+        public GanttItemInRowPosition InRowPosition { get; set; } = GanttItemInRowPosition.FullRow;
+        public double Height
+        {
+            get => _height;
+            set
+            {
+                _height = value;
+                RaisePropertyChanged(nameof(Height));
+            }
+        }
+        public int BottomMargin
+        {
+            get => _bottomMargin;
+            set
+            {
+                _bottomMargin = value;
+                RaisePropertyChanged(nameof(BottomMargin));
+            }
+        }
         #endregion
 
         #region Events
@@ -110,17 +132,18 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels
 
         #endregion
 
-        public GanttItemViewModelBase(GanttRowViewModelBase parentRow)
+        public GanttItemViewModelBase(GanttRowViewModelBase parentRow, GanttItemInRowPosition inRowPosition = GanttItemInRowPosition.FullRow)
         {
             _scaleStep = parentRow.GanttDiagram.ScaleStep;
             parentRow.GanttDiagram.ScaleStepChanged += GraphBase_ScaleStepChanged;
             GanttRow = parentRow;
+            InRowPosition = inRowPosition;
+            GanttRow.IsRowShrinkedChanged += GanttRow_IsRowShrinkedChanged;
+
+            GanttRow_IsRowShrinkedChanged(GanttRow.IsShrinked);
         }
 
-        private void GraphBase_ScaleStepChanged(object sender, EventArgs e)
-        {
-            ScaleStep = _ganttRow.GanttDiagram.ScaleStep;
-        }
+        #region Methods
 
         public virtual void DeleteItem(object obj)
         {
@@ -142,5 +165,30 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels
         public virtual void RecalculatePosition()
         {
         }
+
+        #endregion
+
+        #region Event handlers
+
+        private void GraphBase_ScaleStepChanged(object sender, EventArgs e)
+        {
+            ScaleStep = _ganttRow.GanttDiagram.ScaleStep;
+        }
+
+        private void GanttRow_IsRowShrinkedChanged(bool isShrinked)
+        {
+            if (isShrinked)
+            {
+                Height = InRowPosition == GanttItemInRowPosition.FullRow ? 40 : 20;
+                BottomMargin = InRowPosition == GanttItemInRowPosition.UpperHalf ? 20 : 0;
+            }
+            else
+            {
+                Height = InRowPosition == GanttItemInRowPosition.FullRow ? 80 : 40;
+                BottomMargin = InRowPosition == GanttItemInRowPosition.UpperHalf ? 40 : 0;
+            }
+        }
+
+        #endregion
     }
 }

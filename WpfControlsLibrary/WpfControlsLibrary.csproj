@@ -88,9 +88,13 @@
     <Compile Include="CustomizableContextMenu\Configuration\ContextCommandConfig.cs" />
     <Compile Include="CustomizableContextMenu\CustomizableContextMenu.cs" />
     <Compile Include="CustomizableContextMenu\Models\ContextMenuSubgroup.cs" />
+    <Compile Include="GanttDiagram\Converters\DigitGetHalfCoverter.cs" />
+    <Compile Include="GanttDiagram\Converters\GanttItemInRowPositionToHeightConverter.cs" />
+    <Compile Include="GanttDiagram\Converters\GenttItemInRowPositionToBottomMarginConverter.cs" />
     <Compile Include="GanttDiagram\Converters\IntToLeftMarginConverter.cs" />
     <Compile Include="GanttDiagram\Converters\ScaleStepToPointConverter.cs" />
     <Compile Include="GanttDiagram\Converters\ScaleStepToViewPortConverter.cs" />
+    <Compile Include="GanttDiagram\Models\GanttItemInRowPosition.cs" />
     <Compile Include="GanttDiagram\Models\IGanttItem.cs" />
     <Compile Include="GanttDiagram\uscGanttDiagram.xaml.cs">
       <DependentUpon>uscGanttDiagram.xaml</DependentUpon>
@@ -117,6 +121,7 @@
     <Compile Include="GanttDiagram\ViewModels\TimeGantt\TimeGanttItemViewModel.cs" />
     <Compile Include="Infrastrucrure\Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Infrastrucrure\Converters\CollectionToMaxColumnsCountConverter.cs" />
+    <Compile Include="Infrastrucrure\Converters\IntsToMarginConverter.cs" />
     <Compile Include="Infrastrucrure\Converters\NullToCollapsedConverter.cs" />
     <Compile Include="Infrastrucrure\Converters\ReverseBoolConverter.cs" />
     <Compile Include="Infrastrucrure\Extensions\DependencyObjectExtensions.cs" />

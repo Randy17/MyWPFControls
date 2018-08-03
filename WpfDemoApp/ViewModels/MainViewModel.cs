@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using WpfControlsLibrary.CustomizableContextMenu;
 using WpfControlsLibrary.CustomizableContextMenu.Configuration;
 using WpfControlsLibrary.CustomizableContextMenu.Models;
+using WpfControlsLibrary.GanttDiagram.Models;
 using WpfControlsLibrary.GanttDiagram.ViewModels.TimeGantt;
 using WpfDemoApp.Infrastructure;
 using WpfDemoApp.Models;
@@ -156,8 +157,8 @@ namespace WpfDemoApp.ViewModels
         {
             GanttItems = new ObservableCollection<TimeGanttItem>
             {
-                new TimeGanttItem(DateTime.Now, DateTime.Now.AddMinutes(10), "Row 1", "Item 1"),
-                new TimeGanttItem(DateTime.Now.AddMinutes(20), DateTime.Now.AddMinutes(30), "Row 1", "Item 2"),
+                new TimeGanttItem(DateTime.Now, DateTime.Now.AddMinutes(10), "Row 1", "Item 1", GanttItemInRowPosition.BottomHalf),
+                new TimeGanttItem(DateTime.Now.AddMinutes(20), DateTime.Now.AddMinutes(30), "Row 1", "Item 2", GanttItemInRowPosition.UpperHalf),
                 new TimeGanttItem(DateTime.Now, DateTime.Now.AddMinutes(30), "Row 2", "Item 3"),
                 new TimeGanttItem(DateTime.Now, DateTime.Now.AddMinutes(10), "Row 3", "Item 4"),
                 new TimeGanttItem(DateTime.Now, DateTime.Now.AddMinutes(10), "Row 3", "Item 5")

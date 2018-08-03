@@ -23,11 +23,12 @@
             }
         }
 
-        public TimeGanttItemViewModel(GanttRowViewModelBase parentRow, TimeGanttItem item) : base(parentRow)
+        public TimeGanttItemViewModel(GanttRowViewModelBase parentRow, TimeGanttItem item) : base(parentRow, item.InRowPosition)
         {
             _contentItem = item;
             Caption = item.Name;
             Content = item;
+            InRowPosition = item.InRowPosition;
 
             StartPosition = (int)((item.StartTime - ((TimeGanttDiagramViewModel) parentRow.GanttDiagram).StartTime).Ticks / ((TimeGanttDiagramViewModel) parentRow.GanttDiagram).ScaleResolution);
             Duration = (int)((item.EndTime - item.StartTime).Ticks / ((TimeGanttDiagramViewModel) parentRow.GanttDiagram).ScaleResolution);

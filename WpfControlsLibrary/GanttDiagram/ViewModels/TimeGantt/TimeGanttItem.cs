@@ -33,16 +33,19 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels.TimeGantt
             set;
         }
 
+        public GanttItemInRowPosition InRowPosition { get; set; } = GanttItemInRowPosition.FullRow;
+
         public TimeGanttItem()
         {
         }
 
-        public TimeGanttItem(DateTime startTime, DateTime endTime, string rowName, string name)
+        public TimeGanttItem(DateTime startTime, DateTime endTime, string rowName, string name, GanttItemInRowPosition inRowPostion = GanttItemInRowPosition.FullRow)
         {
             StartTime = startTime;
             EndTime = endTime;
             RowName = rowName;
             Name = name;
+            InRowPosition = inRowPostion;
         }
     }
 }

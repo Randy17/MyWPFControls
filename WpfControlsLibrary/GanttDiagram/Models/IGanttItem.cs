@@ -12,5 +12,7 @@
             get;
             set;
         }
+
+        GanttItemInRowPosition InRowPosition { get; set; }
     }
 }
