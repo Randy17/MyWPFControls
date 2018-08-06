@@ -94,7 +94,7 @@
                                     <!--<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Caption}" FontSize="16" 
                                                TextWrapping="Wrap" TextAlignment="Center" Margin="2" TextTrimming="CharacterEllipsis" />-->
 
-                                    <ContentPresenter Content="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Center"  Margin="2" >
+                                    <ContentPresenter Content="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                         <ContentPresenter.Style>
                                             <Style TargetType="ContentPresenter">
                                                 <Setter Property="ContentTemplate" Value="{Binding RowHeaderTemplate, ElementName=control}"></Setter>
