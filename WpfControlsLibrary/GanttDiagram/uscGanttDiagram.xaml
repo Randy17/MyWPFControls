@@ -49,18 +49,29 @@
                         <MenuItem Command="{Binding UnshrinkAllRowsCmd}" Header="Развернуть все" ></MenuItem>
                     </ContextMenu>
                 </ScrollViewer.ContextMenu>
-                <ItemsControl ItemsSource="{Binding GanttBehavior.Rows, ElementName=control}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Height="{Binding Height, ElementName=graphPanel}"
+                <ItemsControl ItemsSource="{Binding GanttBehavior.Rows, ElementName=control}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" 
+                              Height="{Binding Height, ElementName=graphPanel}"
                               Margin="0,0,0,25" Width="200">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Border HorizontalAlignment="Stretch" BorderThickness="0,0,0,2" VerticalAlignment="Stretch" Background="{Binding RowsHeadersBackground, ElementName=control}" x:Name="border">
+                            <Border HorizontalAlignment="Stretch" BorderThickness="0,0,0,2" VerticalAlignment="Stretch" Background="{Binding RowsHeadersBackground, ElementName=control}" 
+                                    x:Name="border" Height="{Binding Height}">
+                                <!--<Border.Triggers>
+                                    <EventTrigger RoutedEvent="Binding.TargetUpdated">
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetProperty="Height" To="{Binding Height, NotifyOnTargetUpdated=True}" Duration="0:0:0.25" />
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                </Border.Triggers>-->
                                 <Border.Style>
                                     <Style TargetType="Border">
-                                        <Setter Property="Height" Value="100" />
+                                        <!--<Setter Property="Height" Value="100" />-->
                                         <Setter Property="ToolTip" Value="{x:Null}" />
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsShrinked}" Value="True">
-                                                <DataTrigger.EnterActions>
+                                                <!--<DataTrigger.EnterActions>
                                                     <BeginStoryboard>
                                                         <Storyboard>
                                                             <DoubleAnimation Storyboard.TargetProperty="Height" To="50" Duration="0:0:0.25" />
@@ -73,7 +84,7 @@
                                                             <DoubleAnimation Storyboard.TargetProperty="Height" To="100" Duration="0:0:0.25" />
                                                         </Storyboard>
                                                     </BeginStoryboard>
-                                                </DataTrigger.ExitActions>
+                                                </DataTrigger.ExitActions>-->
                                                 <Setter Property="ToolTip" Value="{Binding Caption}" />
                                             </DataTrigger>
                                         </Style.Triggers>
@@ -231,30 +242,7 @@
                             </ItemsControl.Background>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <ganttUI:uscGanttRow>
-                                        <ganttUI:uscGanttRow.Style>
-                                            <Style TargetType="ganttUI:uscGanttRow">
-                                                <Setter Property="Height" Value="100" />
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding IsShrinked}" Value="True">
-                                                        <DataTrigger.EnterActions>
-                                                            <BeginStoryboard>
-                                                                <Storyboard>
-                                                                    <DoubleAnimation Storyboard.TargetProperty="Height" To="50" Duration="0:0:0.25" />
-                                                                </Storyboard>
-                                                            </BeginStoryboard>
-                                                        </DataTrigger.EnterActions>
-                                                        <DataTrigger.ExitActions>
-                                                            <BeginStoryboard>
-                                                                <Storyboard>
-                                                                    <DoubleAnimation Storyboard.TargetProperty="Height" To="100" Duration="0:0:0.25" />
-                                                                </Storyboard>
-                                                            </BeginStoryboard>
-                                                        </DataTrigger.ExitActions>
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </ganttUI:uscGanttRow.Style>
+                                    <ganttUI:uscGanttRow Height="{Binding Height}">                                        
                                     </ganttUI:uscGanttRow>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>

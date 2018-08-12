@@ -14,9 +14,10 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels
         private string _addItemToolTip;
         private string _deleteRowToolTip;
         private bool _isShrinked;
+        private double _height;
 
         private Command _moveRowUpCmd;
-        private Command _moveRowDownCmd;
+        private Command _moveRowDownCmd;        
         #endregion
 
         internal event IsRowShrinkedChanged IsRowShrinkedChanged = delegate { };
@@ -76,9 +77,22 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels
             }
             set
             {
-                _isShrinked = value;
-                RaisePropertyChanged(nameof(IsShrinked));
-                IsRowShrinkedChanged(_isShrinked);
+                if (_isShrinked != value)
+                {
+                    _isShrinked = value;
+                    RaisePropertyChanged(nameof(IsShrinked));
+                    IsRowShrinkedChanged(_isShrinked);
+                    Height = IsShrinked ? 50 : 100;
+                }
+            }
+        }
+        public double Height
+        {
+            get => _height;
+            set
+            {
+                _height = value;
+                RaisePropertyChanged(nameof(Height));
             }
         }
         #endregion
@@ -124,6 +138,8 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels
             Items = new ObservableCollection<GanttItemViewModelBase>();
             _ganttDiagram = parentGraphBase;
             Position = position;
+
+            Height = IsShrinked ? 50 : 100;
         }
 
         #region Methods
