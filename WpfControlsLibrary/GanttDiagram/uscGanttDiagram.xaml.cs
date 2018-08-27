@@ -395,6 +395,14 @@ namespace WpfControlsLibrary.GanttDiagram
             SelectedItem = newSelecteditem;
         }
 
+        private void ScaleScroll_OnScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            if (e.HorizontalChange != 0)
+            {
+                rightScroll.ScrollToHorizontalOffset(e.HorizontalOffset);
+            }
+        }
+
         #endregion
     }
 }

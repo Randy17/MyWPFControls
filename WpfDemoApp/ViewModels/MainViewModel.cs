@@ -161,7 +161,15 @@ namespace WpfDemoApp.ViewModels
                 new TimeGanttItem(DateTime.Now.AddMinutes(20), DateTime.Now.AddMinutes(30), "Row 1", "Item 2", GanttItemInRowPosition.UpperHalf),
                 new TimeGanttItem(DateTime.Now, DateTime.Now.AddMinutes(30), "Row 2", "Item 3"),
                 new TimeGanttItem(DateTime.Now, DateTime.Now.AddMinutes(10), "Row 3", "Item 4"),
-                new TimeGanttItem(DateTime.Now, DateTime.Now.AddMinutes(10), "Row 3", "Item 5")
+                new TimeGanttItem(DateTime.Now, DateTime.Now.AddMinutes(10), "Row 4", "Item 5"),
+                new TimeGanttItem(DateTime.Now, DateTime.Now.AddMinutes(10), "Row 5", "Item 5"),
+                new TimeGanttItem(DateTime.Now, DateTime.Now.AddMinutes(10), "Row 6", "Item 5"),
+                new TimeGanttItem(DateTime.Now, DateTime.Now.AddMinutes(10), "Row 7", "Item 5"),
+                new TimeGanttItem(DateTime.Now, DateTime.Now.AddMinutes(10), "Row 8", "Item 5"),
+                new TimeGanttItem(DateTime.Now, DateTime.Now.AddMinutes(10), "Row 9", "Item 5"),
+                new TimeGanttItem(DateTime.Now, DateTime.Now.AddMinutes(10), "Row 10", "Item 5"),
+                new TimeGanttItem(DateTime.Now, DateTime.Now.AddMinutes(10), "Row 11", "Item 5"),
+                new TimeGanttItem(DateTime.Now, DateTime.Now.AddMinutes(100), "Row 12", "Item 5")
             };
         }
 

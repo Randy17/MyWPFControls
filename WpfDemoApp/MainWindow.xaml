@@ -95,7 +95,7 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <gantt:uscGanttDiagram CanEdit="False" SelectedItemBackground="DarkSalmon" ItemsSource="{Binding GanttItems}" SelectedItem="{Binding SelectedGanttItem, Mode=TwoWay}" 
-                                       IsRowsShrinked="True" >
+                                       IsRowsShrinked="True" VerticalAlignment="Top" >
                     <gantt:uscGanttDiagram.RowHeaderTemplate>
                         <DataTemplate>
                             <Button >
