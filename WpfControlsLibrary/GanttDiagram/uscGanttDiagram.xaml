@@ -22,8 +22,8 @@
             <commonConverters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"></commonConverters:BoolToVisibilityConverter>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid VerticalAlignment="Top">
-        <Grid x:Name="mainGrid" Background="{Binding Background, ElementName=control}" PreviewMouseWheel="MainGrid_OnPreviewMouseWheel">
+    <Grid VerticalAlignment="Stretch">
+        <Grid x:Name="mainGrid" Background="{Binding Background, ElementName=control}" PreviewMouseWheel="MainGrid_OnPreviewMouseWheel" VerticalAlignment="Top">
             <Grid.Style>
                 <Style TargetType="Grid">
                     <Setter Property="Visibility" Value="Visible"></Setter>
@@ -275,7 +275,9 @@
 
                 <ScrollViewer x:Name="scaleScroll" Grid.Row="1" VerticalAlignment="Top" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" 
                               ScrollChanged="ScaleScroll_OnScrollChanged" Style="{StaticResource HorizontalScrollTrueHidden}" >
-                    <ganttUI:uscGraphScale Width="{Binding ActualWidth, ElementName=graphPanel}" Grid.Row="1" x:Name="timeScale" DataContext="{Binding GanttBehavior.ScaleValues, ElementName=control}" Background="{Binding Background, ElementName=control}"></ganttUI:uscGraphScale>
+                    <Border BorderThickness="0,1,0,0" BorderBrush="LightGray">
+                        <ganttUI:uscGraphScale Width="{Binding ActualWidth, ElementName=graphPanel}" Grid.Row="1" x:Name="timeScale" DataContext="{Binding GanttBehavior.ScaleValues, ElementName=control}" Background="{Binding Background, ElementName=control}"></ganttUI:uscGraphScale>
+                    </Border>
                 </ScrollViewer>
             </Grid>
             
