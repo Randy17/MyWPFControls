@@ -22,7 +22,7 @@
             <commonConverters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"></commonConverters:BoolToVisibilityConverter>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid VerticalAlignment="Stretch">
+    <Grid VerticalAlignment="Top">
         <Grid x:Name="mainGrid" Background="{Binding Background, ElementName=control}" PreviewMouseWheel="MainGrid_OnPreviewMouseWheel">
             <Grid.Style>
                 <Style TargetType="Grid">
