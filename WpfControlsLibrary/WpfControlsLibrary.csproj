@@ -134,6 +134,7 @@
     <Compile Include="Infrastrucrure\Extensions\DependencyObjectExtensions.cs" />
     <Compile Include="Infrastrucrure\UIElementsTreeHelper.cs" />
     <Compile Include="VectorIconButton.cs" />
+    <Compile Include="VectorIconDropdownButton.cs" />
     <Compile Include="VectorIconToggleButton.cs" />
     <Page Include="CustomizableContextMenu\Styles\Colors.xaml">
       <SubType>Designer</SubType>

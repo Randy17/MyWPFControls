@@ -33,12 +33,13 @@
                     </Image.ContextMenu>
                 </Image>
 
-                <Grid Grid.Row="1" Visibility="Collapsed">
+                <Grid Grid.Row="1" Visibility="Visible">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="100"/>
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
                         <ColumnDefinition />
                         <ColumnDefinition />
                         <ColumnDefinition />
@@ -67,7 +68,7 @@
                 </WpfControls:VectorIconButton>
 
                     <WpfControls:VectorIconToggleButton Grid.Column="2" 
-                                                    IsEnabled="{Binding ElementName=state, Path=IsChecked}">
+                                                    IsEnabled="{Binding ElementName=state, Path=IsChecked}" Caption="qweq">
                     <WpfControls:VectorIconToggleButton.IconDrawingImage>
                         <DrawingImage>
                             <DrawingImage.Drawing>
@@ -82,6 +83,13 @@
                         </DrawingImage>
                     </WpfControls:VectorIconToggleButton.IconDrawingImage>
                 </WpfControls:VectorIconToggleButton>
+
+                    <WpfControls:VectorIconDropdownButton Grid.Column="3" FontSize="14" TextBlock.LineHeight="14" Margin="4"
+                                                  Caption="Button with SVG file"
+                                                  VectorIconPath="Icons/Freesample.svg"
+                                                  IsEnabled="{Binding ElementName=state, Path=IsChecked}" Background="White" IconFillBrush="Black" >
+                        <Button Width="100" Height="100"></Button>
+                    </WpfControls:VectorIconDropdownButton>
 
                     <CheckBox Grid.Row="1" Margin="4" x:Name="state" IsChecked="True">Is Enabled</CheckBox>
                 </Grid>

@@ -147,6 +147,9 @@
     <Content Include="Icons\180.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Icons\open.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Icons\Context Menu BackGround.png" />
     <Content Include="Icons\Freesample.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
