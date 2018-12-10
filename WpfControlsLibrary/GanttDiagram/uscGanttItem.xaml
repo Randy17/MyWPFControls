@@ -34,6 +34,18 @@
                 </MultiDataTrigger>
             </Style.Triggers>
         </Style>
+
+        <Style TargetType="Border" x:Key="DefaultGanttItemBorderStyle">
+            <Setter Property="Background" Value="White" />
+            <Setter Property="BorderBrush" Value="Black" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                    <Setter Property="BorderThickness" Value="1.5"></Setter>
+                    <Setter Property="Background" Value="{Binding SelectedItemBackground, RelativeSource={RelativeSource FindAncestor, AncestorType=local:uscGanttDiagram}}"></Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
     <UserControl.Margin>
         <!--<Binding Converter="{StaticResource intToLeftMarginConverter}" Mode="TwoWay" Path="StartPosition" ConverterParameter="{Binding InRowPosition}">-->
@@ -62,8 +74,8 @@
         </EventTrigger>
     </UserControl.Triggers>-->
 
-    <Border CornerRadius="3">
-        <Border.Style>
+    <Border CornerRadius="3" x:Name="PART_Border" Style="{Binding BorderStyle, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:uscGanttItem}}" >
+        <!--<Border.Style>
             <Style TargetType="Border">
                 <Setter Property="Background" Value="White" />
                 <Setter Property="BorderBrush" Value="Black" />
@@ -75,7 +87,7 @@
                     </DataTrigger>
                 </Style.Triggers>
             </Style>
-        </Border.Style>
+        </Border.Style>-->
         
         <Grid x:Name="grid">
             <Thumb Width="10" Height="10" Cursor="SizeWE" Margin="-7 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Left"  x:Name="LeftAdorner" DragDelta="LeftAdorner_DragDelta" />

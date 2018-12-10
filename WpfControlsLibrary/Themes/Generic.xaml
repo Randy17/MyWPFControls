@@ -358,7 +358,7 @@
                             </local:VectorIconToggleButton.Template>
                         </local:VectorIconToggleButton>
 
-                        <Popup x:Name="PART_Popup" AllowsTransparency="True" Focusable="False" HorizontalOffset="1" IsOpen="{Binding IsChecked, ElementName=PART_DropDownButton}" 
+                        <Popup x:Name="PART_Popup" AllowsTransparency="True" Focusable="False" HorizontalOffset="1" IsOpen="{Binding IsOpened, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" 
                                Placement="{TemplateBinding DropDownPosition}" StaysOpen="False" ToolTip="" VerticalOffset="1">
                             <Popup.Resources>
                                 <Style x:Key="{x:Type ToolTip}" TargetType="{x:Type ToolTip}">

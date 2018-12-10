@@ -44,10 +44,40 @@ namespace WpfControlsLibrary.GanttDiagram
         }
         #endregion
 
+        #region BorderStyle
+
+
+        public Style BorderStyle
+        {
+            get { return (Style)GetValue(BorderStyleProperty); }
+            set { SetValue(BorderStyleProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for BorderStyle.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty BorderStyleProperty =
+            DependencyProperty.Register("BorderStyle", typeof(Style), typeof(uscGanttItem), new PropertyMetadata(null,
+                (o, args) =>
+                {
+                    if (o is uscGanttItem ganttItem)
+                    {
+                        if(args.NewValue == args.OldValue)
+                            return;
+
+                        if (args.NewValue == null)
+                        {
+                            ganttItem.SetCurrentValue(BorderStyleProperty, ganttItem.FindResource("DefaultGanttItemBorderStyle"));
+                        }
+                    }
+                }));
+
+
+        #endregion
+
 
         public uscGanttItem()
         {
             InitializeComponent();
+            SetCurrentValue(BorderStyleProperty, this.FindResource("DefaultGanttItemBorderStyle"));
         }
 
         private void UscGanttItem_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)

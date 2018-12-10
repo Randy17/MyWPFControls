@@ -37,7 +37,8 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <ganttUI:uscGanttItem CanEdit="{Binding CanEdit, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ganttUI:uscGanttDiagram}}">
+                        <ganttUI:uscGanttItem CanEdit="{Binding CanEdit, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ganttUI:uscGanttDiagram}}"
+                                              BorderStyle="{Binding GanttItemBorderStyle, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ganttUI:uscGanttDiagram}}">
                             <!--<ganttUI:uscGanttItem.Style>
                                 <Style TargetType="ganttUI:uscGanttItem">
                                     <Setter Property="Height" Value="{Binding InRowPosition, Converter={StaticResource ganttItemInRowPositionToHeightConverter}}" />

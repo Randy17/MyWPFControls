@@ -299,6 +299,20 @@ namespace WpfControlsLibrary.GanttDiagram
 
         #endregion
 
+        #region GantItemBorderStyle
+
+        public Style GanttItemBorderStyle
+        {
+            get { return (Style)GetValue(GanttItemBorderStyleProperty); }
+            set { SetValue(GanttItemBorderStyleProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for GanttItemBorderStyle.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty GanttItemBorderStyleProperty =
+            DependencyProperty.Register("GanttItemBorderStyle", typeof(Style), typeof(uscGanttDiagram), new PropertyMetadata(null));
+
+        #endregion
+
         #endregion
 
         public uscGanttDiagram()

@@ -104,6 +104,12 @@
                 </Grid.RowDefinitions>
                 <gantt:uscGanttDiagram CanEdit="False" SelectedItemBackground="DarkSalmon" ItemsSource="{Binding GanttItems}" SelectedItem="{Binding SelectedGanttItem, Mode=TwoWay}" 
                                        IsRowsShrinked="True" >
+                    <gantt:uscGanttDiagram.GanttItemBorderStyle>
+                        <Style TargetType="Border">
+                            <Setter Property="BorderBrush" Value="Red"></Setter>
+                            <Setter Property="BorderThickness" Value="5"></Setter>
+                        </Style>
+                    </gantt:uscGanttDiagram.GanttItemBorderStyle>
                     <gantt:uscGanttDiagram.RowHeaderTemplate>
                         <DataTemplate>
                             <Button >
