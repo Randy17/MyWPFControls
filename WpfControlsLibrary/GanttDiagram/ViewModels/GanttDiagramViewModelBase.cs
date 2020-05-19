@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Media;
+using Microsoft.Expression.Interactivity;
 using WpfControlsLibrary.GanttDiagram.Models;
 using WpfControlsLibrary.GanttDiagram.ViewModels.Interfaces;
 using WpfControlsLibrary.Infrastrucrure;
 
 namespace WpfControlsLibrary.GanttDiagram.ViewModels
 {
-    internal class GanttDiagramViewModelBase <TGanttItem> : ViewModelBase, IGanttDiagramViewModel
+    internal class GanttDiagramViewModelBase <TGanttItem, TThresholdLine> : ViewModelBase, IGanttDiagramViewModel
         where TGanttItem : IGanttItem
+        where TThresholdLine : ThresholdLineBase
     {
         #region Fields
 
@@ -21,6 +24,7 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels
         private int _maxWidth = 20075;
         private ObservableCollection<ScaleValue> _scaleValues;
         private ObservableCollection<GanttRowViewModelBase> _rows;
+        private ObservableCollection<TThresholdLine> _thresholdLines;
         private bool _isRangeSelectorVisible;
         private double _leftRangeSelectorPosition;
         private double _rangeWidth;
@@ -186,6 +190,16 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels
         public virtual ObservableCollection<TGanttItem> Items { get; protected set; }
         public virtual TGanttItem SelectedItem { get; set; }
 
+        public virtual ObservableCollection<TThresholdLine> ThresholdLines
+        {
+            get => _thresholdLines;
+            protected set
+            {
+                _thresholdLines = value;
+                RaisePropertyChanged(nameof(ThresholdLines));
+            }
+        }
+
         #endregion
 
         #region Events
@@ -293,12 +307,27 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels
             return true;
         }
 
+        public virtual bool TrySetThresholdLines(IList newLines)
+        {
+            return true;
+        }
+
         public virtual void AddItem(IGanttItem newItem)
         {
             throw new NotImplementedException();
         }
         
         public virtual void RemoveItem(IGanttItem item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual void AddThresholdLine(ThresholdLineBase newItem)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual void RemoveThresholdLine(ThresholdLineBase item)
         {
             throw new NotImplementedException();
         }

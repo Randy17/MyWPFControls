@@ -267,6 +267,7 @@
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
                         </Border>
+                        <ganttUI:uscThresholdLines Grid.RowSpan="2" DataContext="{Binding GanttBehavior, ElementName=control}"></ganttUI:uscThresholdLines>
                         <!--<ganttUI:uscGraphScale Grid.Row="1" x:Name="timeScale" DataContext="{Binding GanttBehavior.ScaleValues, ElementName=control}" Background="{Binding Background, ElementName=control}"></ganttUI:uscGraphScale>-->
                         <ganttUI:uscRangeSelector Grid.RowSpan="2" Visibility="{Binding GanttBehavior.IsRangeSelectorVisible, Converter={StaticResource boolToVisibilityConverter}, ElementName=control}" 
                                               LeftAdornerPosition="{Binding GanttBehavior.LeftRangeSelectorPosition, Mode=TwoWay, ElementName=control}" SelectedAreaWidth="{Binding GanttBehavior.RangeWidth, Mode=TwoWay, ElementName=control}"></ganttUI:uscRangeSelector>

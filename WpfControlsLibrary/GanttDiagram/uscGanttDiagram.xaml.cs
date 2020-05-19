@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -8,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using WpfControlsLibrary.GanttDiagram.Models;
+using WpfControlsLibrary.GanttDiagram.ViewModels;
 using WpfControlsLibrary.GanttDiagram.ViewModels.Interfaces;
 using WpfControlsLibrary.GanttDiagram.ViewModels.TimeGantt;
 
@@ -313,6 +315,54 @@ namespace WpfControlsLibrary.GanttDiagram
 
         #endregion
 
+        #region ThresholdLines
+
+        public IList ThresholdLines
+        {
+            get { return (IList)GetValue(ThresholdLinesProperty); }
+            set { SetValue(ThresholdLinesProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ThresholdLines.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ThresholdLinesProperty =
+            DependencyProperty.Register("ThresholdLines", typeof(IList), typeof(uscGanttDiagram), new PropertyMetadata(new List<ThresholdLineBase>(), (o, args) =>
+            {
+                if (o is uscGanttDiagram ganttDiagram)
+                {
+                    ganttDiagram.UpdateDiagrammViewModel();
+
+                    if (args.OldValue is INotifyCollectionChanged oldObservableCollection)
+                    {
+                        oldObservableCollection.CollectionChanged -= ganttDiagram.ThresholdLines_CollectionChanged;
+                    }
+
+                    if (args.NewValue is INotifyCollectionChanged newObservableCollection)
+                    {
+                        newObservableCollection.CollectionChanged += ganttDiagram.ThresholdLines_CollectionChanged;
+                    }
+                }
+            }));
+
+        private void ThresholdLines_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                foreach (var newItem in e.NewItems.OfType<ThresholdLineBase>())
+                {
+                    GanttBehavior.AddThresholdLine(newItem);
+                }
+            }
+            else if (e.Action == NotifyCollectionChangedAction.Remove)
+            {
+                foreach (var oldItem in e.OldItems.OfType<ThresholdLineBase>())
+                {
+                    GanttBehavior.RemoveThresholdLine(oldItem);
+                }
+            }
+        }
+
+        #endregion
+
         #endregion
 
         public uscGanttDiagram()
@@ -335,11 +385,24 @@ namespace WpfControlsLibrary.GanttDiagram
 
         private void UpdateDiagrammViewModel()
         {
-            if (GanttBehavior != null && ItemsSource != null)
+            if (GanttBehavior != null)
             {
-                if (!GanttBehavior.TrySetItems(ItemsSource))
+                if (ItemsSource != null)
                 {
-                    Debug.WriteLine($"uscGanttDiagramm: Cannot set items of type {ItemsSource.GetType()} to ItemsSource property");
+                    if (!GanttBehavior.TrySetItems(ItemsSource))
+                    {
+                        Debug.WriteLine(
+                            $"uscGanttDiagramm: Cannot set items of type {ItemsSource.GetType()} to ItemsSource property");
+                    }
+                }
+
+                if (ThresholdLines != null)
+                {
+                    if (!GanttBehavior.TrySetThresholdLines(ThresholdLines))
+                    {
+                        Debug.WriteLine(
+                            $"uscGanttDiagramm: Cannot set items of type {ThresholdLines.GetType()} to ThresholdLines property");
+                    }
                 }
             }
         }

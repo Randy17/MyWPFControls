@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using WpfControlsLibrary.GanttDiagram.Models;
 using WpfControlsLibrary.Infrastrucrure;
@@ -45,9 +46,13 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels.Interfaces
         void CalculateScaleValues(double graphWidth);
 
         bool TrySetItems(IList newItems);
+        bool TrySetThresholdLines(IList newLines);
 
         void AddItem(IGanttItem newItem);
         void RemoveItem(IGanttItem item);
+
+        void AddThresholdLine(ThresholdLineBase newItem);
+        void RemoveThresholdLine(ThresholdLineBase item);
 
         #endregion
     }

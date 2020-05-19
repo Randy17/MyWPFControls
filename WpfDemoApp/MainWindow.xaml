@@ -103,7 +103,7 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <gantt:uscGanttDiagram CanEdit="False" SelectedItemBackground="DarkSalmon" ItemsSource="{Binding GanttItems}" SelectedItem="{Binding SelectedGanttItem, Mode=TwoWay}" 
-                                       IsRowsShrinked="True" >
+                                       IsRowsShrinked="True" IsRangeSelectorVisible="False" >
                     <gantt:uscGanttDiagram.GanttItemBorderStyle>
                         <Style TargetType="Border">
                             <Setter Property="BorderBrush" Value="Red"></Setter>
@@ -117,6 +117,9 @@
                             </Button>
                         </DataTemplate>
                     </gantt:uscGanttDiagram.RowHeaderTemplate>
+                    <gantt:uscGanttDiagram.ThresholdLines>
+                        <ganttVm:TimeGanttThresholdLine TimePosition="2020-05-19T20:00:00" Brush="Red" Description="Info"></ganttVm:TimeGanttThresholdLine>
+                    </gantt:uscGanttDiagram.ThresholdLines>
                 </gantt:uscGanttDiagram>
                 
                 <StackPanel Grid.Row="1" Orientation="Horizontal">

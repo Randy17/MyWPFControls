@@ -118,14 +118,19 @@
     <Compile Include="GanttDiagram\uscRangeSelector.xaml.cs">
       <DependentUpon>uscRangeSelector.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GanttDiagram\uscThresholdLines.xaml.cs">
+      <DependentUpon>uscThresholdLines.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GanttDiagram\ViewModels\GanttItemViewModelBase.cs" />
     <Compile Include="GanttDiagram\ViewModels\GanttDiagramViewModelBase.cs" />
     <Compile Include="GanttDiagram\ViewModels\GanttRowViewModelBase.cs" />
     <Compile Include="GanttDiagram\ViewModels\Interfaces\IGanttDiagramViewModel.cs" />
     <Compile Include="GanttDiagram\ViewModels\ScaleValue.cs" />
+    <Compile Include="GanttDiagram\ViewModels\ThresholdLineBase.cs" />
     <Compile Include="GanttDiagram\ViewModels\TimeGantt\TimeGanttDiagramViewModel.cs" />
     <Compile Include="GanttDiagram\ViewModels\TimeGantt\TimeGanttItem.cs" />
     <Compile Include="GanttDiagram\ViewModels\TimeGantt\TimeGanttItemViewModel.cs" />
+    <Compile Include="GanttDiagram\ViewModels\TimeGantt\TimeGanttThresholdLine.cs" />
     <Compile Include="Infrastrucrure\Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Infrastrucrure\Converters\CollectionToMaxColumnsCountConverter.cs" />
     <Compile Include="Infrastrucrure\Converters\IntsToMarginConverter.cs" />
@@ -193,6 +198,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GanttDiagram\uscRangeSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GanttDiagram\uscThresholdLines.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

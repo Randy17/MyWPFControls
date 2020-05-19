@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
@@ -8,7 +9,7 @@ using WpfControlsLibrary.GanttDiagram.Models;
 
 namespace WpfControlsLibrary.GanttDiagram.ViewModels.TimeGantt
 {
-    internal class TimeGanttDiagramViewModel : GanttDiagramViewModelBase<TimeGanttItem>
+    internal class TimeGanttDiagramViewModel : GanttDiagramViewModelBase<TimeGanttItem, TimeGanttThresholdLine>
     {
         #region Fields
         private long _minScaleStepTicks;
@@ -61,6 +62,7 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels.TimeGantt
                 }
                 LeftRangeSelectorPosition = LeftRangeSelectorPosition * value / ScaleStep;
                 RangeWidth = RangeWidth * value / ScaleStep;
+                RecalculateThresholdLinesPositions();
                 base.ScaleStep = value;
             }
         }
@@ -272,6 +274,27 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels.TimeGantt
             return false;
         }
 
+        public override bool TrySetThresholdLines(IList newLines)
+        {
+            var type = newLines.GetType();
+            if (typeof(ThresholdLineBase).IsAssignableFrom(type.GenericTypeArguments[0]))
+            {
+                ThresholdLines = new ObservableCollection<TimeGanttThresholdLine>(newLines.Cast<TimeGanttThresholdLine>());
+                RecalculateThresholdLinesPositions();
+                return true;
+            }
+
+            return false;
+        }
+
+        private void RecalculateThresholdLinesPositions()
+        {
+            foreach (var timeGanttThresholdLine in ThresholdLines)
+            {
+                timeGanttThresholdLine.Position = (int)((timeGanttThresholdLine.TimePosition - StartTime).Ticks / ScaleResolution);
+            }
+        }
+
         public override void AddItem(IGanttItem newItem)
         {
             if (newItem is TimeGanttItem timeGanttItem)
@@ -285,6 +308,22 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels.TimeGantt
             if (item is TimeGanttItem timeGanttItem)
             {
                 Items.Remove(timeGanttItem);
+            }
+        }
+
+        public override void AddThresholdLine(ThresholdLineBase newItem)
+        {
+            if (newItem is TimeGanttThresholdLine timeGanttThresholdLine)
+            {
+                ThresholdLines.Add(timeGanttThresholdLine);
+            }
+        }
+
+        public override void RemoveThresholdLine(ThresholdLineBase item)
+        {
+            if (item is TimeGanttThresholdLine timeGanttThresholdLine)
+            {
+                ThresholdLines.Remove(timeGanttThresholdLine);
             }
         }
 
