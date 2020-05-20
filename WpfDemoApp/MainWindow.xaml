@@ -9,6 +9,7 @@
         xmlns:ganttVm="clr-namespace:WpfControlsLibrary.GanttDiagram.ViewModels.TimeGantt;assembly=WpfControlsLibrary"
         xmlns:behaviors="clr-namespace:WpfControlsLibrary.Behaviors;assembly=WpfControlsLibrary"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:models="clr-namespace:WpfControlsLibrary.GanttDiagram.Models;assembly=WpfControlsLibrary"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525" WindowState="Maximized" Closing="Window_Closing">
     <Window.Background>
@@ -103,7 +104,7 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <gantt:uscGanttDiagram CanEdit="False" SelectedItemBackground="DarkSalmon" ItemsSource="{Binding GanttItems}" SelectedItem="{Binding SelectedGanttItem, Mode=TwoWay}" 
-                                       IsRowsShrinked="True" IsRangeSelectorVisible="False" >
+                                       IsRowsShrinked="True" IsRangeSelectorVisible="False" ThresholdLines="{Binding GanttLines}"  >
                     <gantt:uscGanttDiagram.GanttItemBorderStyle>
                         <Style TargetType="Border">
                             <Setter Property="BorderBrush" Value="Red"></Setter>
@@ -117,9 +118,9 @@
                             </Button>
                         </DataTemplate>
                     </gantt:uscGanttDiagram.RowHeaderTemplate>
-                    <gantt:uscGanttDiagram.ThresholdLines>
-                        <ganttVm:TimeGanttThresholdLine TimePosition="2020-05-19T20:00:00" Brush="Red" Description="Info"></ganttVm:TimeGanttThresholdLine>
-                    </gantt:uscGanttDiagram.ThresholdLines>
+                    <!--<gantt:uscGanttDiagram.ThresholdLines>
+                        <models:TimeGanttThresholdLine TimePosition="2020-05-20T13:30:00" Brush="Red" Description="Info"></models:TimeGanttThresholdLine>
+                    </gantt:uscGanttDiagram.ThresholdLines>-->
                 </gantt:uscGanttDiagram>
                 
                 <StackPanel Grid.Row="1" Orientation="Horizontal">

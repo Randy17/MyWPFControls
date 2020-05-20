@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using WpfControlsLibrary.CustomizableContextMenu;
 using WpfControlsLibrary.CustomizableContextMenu.Configuration;
 using WpfControlsLibrary.CustomizableContextMenu.Models;
@@ -21,6 +22,7 @@ namespace WpfDemoApp.ViewModels
 
         private TimeGanttItem _selectedGanttItem;
         private ObservableCollection<TimeGanttItem> _ganttItems;
+        private ObservableCollection<TimeGanttThresholdLine> _ganttLines;
 
         public List<ContextMenuGroup> CommandsGroups
         {
@@ -39,6 +41,16 @@ namespace WpfDemoApp.ViewModels
             {
                 _ganttItems = value;
                 RaisePropertyChanged(nameof(GanttItems));
+            }
+        }
+
+        public ObservableCollection<TimeGanttThresholdLine> GanttLines
+        {
+            get { return _ganttLines; }
+            set
+            {
+                _ganttLines = value;
+                RaisePropertyChanged(nameof(GanttLines));
             }
         }
 
@@ -170,6 +182,15 @@ namespace WpfDemoApp.ViewModels
                 new TimeGanttItem(DateTime.Now, DateTime.Now.AddMinutes(10), "Row 10", "Item 5"),
                 new TimeGanttItem(DateTime.Now, DateTime.Now.AddMinutes(10), "Row 11", "Item 5"),
                 new TimeGanttItem(DateTime.Now, DateTime.Now.AddMinutes(100), "Row 12", "Item 5")
+            };
+
+            GanttLines = new ObservableCollection<TimeGanttThresholdLine>
+            {
+                new TimeGanttThresholdLine()
+                {
+                    Brush = new SolidColorBrush(Colors.Red), TimePosition = DateTime.Now.AddMinutes(15),
+                    Description = "test"
+                }
             };
         }
 
