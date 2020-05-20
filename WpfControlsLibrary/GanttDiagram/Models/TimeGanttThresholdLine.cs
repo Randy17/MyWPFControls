@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Windows.Media;
-using WpfControlsLibrary.Infrastrucrure;
 
-namespace WpfControlsLibrary.GanttDiagram.ViewModels.TimeGantt
+namespace WpfControlsLibrary.GanttDiagram.Models
 {
-    public class TimeGanttThresholdLine : ThresholdLineBase
+    public class TimeGanttThresholdLine : IThresholdLine
     {
         private DateTime _timePosition;
 
+        public string Description { get; set; }
+        public Brush Brush { get; set; }
         public DateTime TimePosition
         {
             get => _timePosition;
@@ -16,9 +17,11 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels.TimeGantt
                 if (_timePosition != value)
                 {
                     _timePosition = value;
-                    RaisePropertyChanged(nameof(TimePosition));
+                    TimePositionChanged();
                 }
             }
         }
+
+        public event Action TimePositionChanged = delegate { };
     }
 }

@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media;
+﻿using System.Windows.Media;
+using WpfControlsLibrary.GanttDiagram.Models;
 using WpfControlsLibrary.Infrastrucrure;
 
 namespace WpfControlsLibrary.GanttDiagram.ViewModels
 {
-    public abstract class ThresholdLineBase : ViewModelBase
+    internal abstract class ThresholdLineViewModelBase<TThresholdLine> : ViewModelBase 
+        where TThresholdLine : IThresholdLine
     {
+        protected readonly TThresholdLine _thresholdLine;
+
         private string _description;
         private Brush _brush;
         private int _position;
@@ -51,6 +50,17 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels
                     RaisePropertyChanged(nameof(Position));
                 }
             }
+        }
+
+        public TThresholdLine ThresholdLine => _thresholdLine;
+
+        protected ThresholdLineViewModelBase(TThresholdLine thresholdLine)
+        {
+            _thresholdLine = thresholdLine;
+
+            Description = thresholdLine.Description;
+            Brush = thresholdLine.Brush;
+            Position = 0;
         }
     }
 }

@@ -51,8 +51,8 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels.Interfaces
         void AddItem(IGanttItem newItem);
         void RemoveItem(IGanttItem item);
 
-        void AddThresholdLine(ThresholdLineBase newItem);
-        void RemoveThresholdLine(ThresholdLineBase item);
+        void AddThresholdLine(IThresholdLine newItem);
+        void RemoveThresholdLine(IThresholdLine item);
 
         #endregion
     }

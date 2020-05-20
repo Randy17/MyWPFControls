@@ -126,11 +126,13 @@
     <Compile Include="GanttDiagram\ViewModels\GanttRowViewModelBase.cs" />
     <Compile Include="GanttDiagram\ViewModels\Interfaces\IGanttDiagramViewModel.cs" />
     <Compile Include="GanttDiagram\ViewModels\ScaleValue.cs" />
-    <Compile Include="GanttDiagram\ViewModels\ThresholdLineBase.cs" />
+    <Compile Include="GanttDiagram\Models\IThresholdLine.cs" />
+    <Compile Include="GanttDiagram\ViewModels\ThresholdLineViewModelBase.cs" />
     <Compile Include="GanttDiagram\ViewModels\TimeGantt\TimeGanttDiagramViewModel.cs" />
     <Compile Include="GanttDiagram\ViewModels\TimeGantt\TimeGanttItem.cs" />
     <Compile Include="GanttDiagram\ViewModels\TimeGantt\TimeGanttItemViewModel.cs" />
-    <Compile Include="GanttDiagram\ViewModels\TimeGantt\TimeGanttThresholdLine.cs" />
+    <Compile Include="GanttDiagram\Models\TimeGanttThresholdLine.cs" />
+    <Compile Include="GanttDiagram\ViewModels\TimeGantt\TimeGanttThresholdLineViewModel.cs" />
     <Compile Include="Infrastrucrure\Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Infrastrucrure\Converters\CollectionToMaxColumnsCountConverter.cs" />
     <Compile Include="Infrastrucrure\Converters\IntsToMarginConverter.cs" />

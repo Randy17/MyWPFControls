@@ -62,7 +62,6 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels.TimeGantt
                 }
                 LeftRangeSelectorPosition = LeftRangeSelectorPosition * value / ScaleStep;
                 RangeWidth = RangeWidth * value / ScaleStep;
-                RecalculateThresholdLinesPositions();
                 base.ScaleStep = value;
             }
         }
@@ -277,22 +276,14 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels.TimeGantt
         public override bool TrySetThresholdLines(IList newLines)
         {
             var type = newLines.GetType();
-            if (typeof(ThresholdLineBase).IsAssignableFrom(type.GenericTypeArguments[0]))
+            if (typeof(IThresholdLine).IsAssignableFrom(type.GenericTypeArguments[0]))
             {
-                ThresholdLines = new ObservableCollection<TimeGanttThresholdLine>(newLines.Cast<TimeGanttThresholdLine>());
-                RecalculateThresholdLinesPositions();
+                ThresholdLines = new ObservableCollection<ThresholdLineViewModelBase<TimeGanttThresholdLine>>(newLines
+                    .Cast<TimeGanttThresholdLine>().Select(tl => new TimeGanttThresholdLineViewModel(tl, this)));
                 return true;
             }
 
             return false;
-        }
-
-        private void RecalculateThresholdLinesPositions()
-        {
-            foreach (var timeGanttThresholdLine in ThresholdLines)
-            {
-                timeGanttThresholdLine.Position = (int)((timeGanttThresholdLine.TimePosition - StartTime).Ticks / ScaleResolution);
-            }
         }
 
         public override void AddItem(IGanttItem newItem)
@@ -311,19 +302,21 @@ namespace WpfControlsLibrary.GanttDiagram.ViewModels.TimeGantt
             }
         }
 
-        public override void AddThresholdLine(ThresholdLineBase newItem)
+        public override void AddThresholdLine(IThresholdLine newItem)
         {
             if (newItem is TimeGanttThresholdLine timeGanttThresholdLine)
             {
-                ThresholdLines.Add(timeGanttThresholdLine);
+                ThresholdLines.Add(new TimeGanttThresholdLineViewModel(timeGanttThresholdLine, this));
             }
         }
 
-        public override void RemoveThresholdLine(ThresholdLineBase item)
+        public override void RemoveThresholdLine(IThresholdLine item)
         {
             if (item is TimeGanttThresholdLine timeGanttThresholdLine)
             {
-                ThresholdLines.Remove(timeGanttThresholdLine);
+                var toRemove = ThresholdLines.FirstOrDefault(tl => tl.ThresholdLine == timeGanttThresholdLine);
+                if(toRemove != null)
+                    ThresholdLines.Remove(toRemove);
             }
         }
 

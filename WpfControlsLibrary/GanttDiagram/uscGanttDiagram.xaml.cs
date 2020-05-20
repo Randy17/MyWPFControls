@@ -325,7 +325,7 @@ namespace WpfControlsLibrary.GanttDiagram
 
         // Using a DependencyProperty as the backing store for ThresholdLines.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ThresholdLinesProperty =
-            DependencyProperty.Register("ThresholdLines", typeof(IList), typeof(uscGanttDiagram), new PropertyMetadata(new List<ThresholdLineBase>(), (o, args) =>
+            DependencyProperty.Register("ThresholdLines", typeof(IList), typeof(uscGanttDiagram), new PropertyMetadata(new List<IThresholdLine>(), (o, args) =>
             {
                 if (o is uscGanttDiagram ganttDiagram)
                 {
@@ -347,14 +347,14 @@ namespace WpfControlsLibrary.GanttDiagram
         {
             if (e.Action == NotifyCollectionChangedAction.Add)
             {
-                foreach (var newItem in e.NewItems.OfType<ThresholdLineBase>())
+                foreach (var newItem in e.NewItems.OfType<IThresholdLine>())
                 {
                     GanttBehavior.AddThresholdLine(newItem);
                 }
             }
             else if (e.Action == NotifyCollectionChangedAction.Remove)
             {
-                foreach (var oldItem in e.OldItems.OfType<ThresholdLineBase>())
+                foreach (var oldItem in e.OldItems.OfType<IThresholdLine>())
                 {
                     GanttBehavior.RemoveThresholdLine(oldItem);
                 }
