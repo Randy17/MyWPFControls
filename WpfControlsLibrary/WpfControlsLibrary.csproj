@@ -1,41 +1,14 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A4622846-9C60-44F0-98CD-5CBB6D867C25}</ProjectGuid>
-    <OutputType>library</OutputType>
-    <RootNamespace>WpfControlsLibrary</RootNamespace>
-    <AssemblyName>WpfControlsLibrary</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <WarningLevel>4</WarningLevel>
+    <TargetFrameworks>net461;net6.0-windows</TargetFrameworks>
+    <OutputType>Library</OutputType>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <UseWPF>true</UseWPF>
+    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Expression.Drawing">
@@ -44,207 +17,9 @@
     <Reference Include="Microsoft.Expression.Interactions">
       <HintPath>..\packages\MSExpressionLibraries\Microsoft.Expression.Interactions.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpVectors.Converters, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b532964b8548be77, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpVectors.1.0\lib\net20\SharpVectors.Converters.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpVectors.Core, Version=0.3.1.1588, Culture=neutral, PublicKeyToken=7407205e337c98ef, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpVectors.1.0\lib\net20\SharpVectors.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpVectors.Css, Version=0.3.1.1590, Culture=neutral, PublicKeyToken=7a46e3f532fdb787, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpVectors.1.0\lib\net20\SharpVectors.Css.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpVectors.Dom, Version=0.3.1.1589, Culture=neutral, PublicKeyToken=517340b6277b1a7a, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpVectors.1.0\lib\net20\SharpVectors.Dom.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpVectors.Model, Version=0.3.1.1592, Culture=neutral, PublicKeyToken=2236cfc76b505845, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpVectors.1.0\lib\net20\SharpVectors.Model.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpVectors.Rendering.Gdi, Version=0.3.1.1595, Culture=neutral, PublicKeyToken=03902092284347e3, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpVectors.1.0\lib\net20\SharpVectors.Rendering.Gdi.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpVectors.Rendering.Wpf, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d0902381100df30e, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpVectors.1.0\lib\net20\SharpVectors.Rendering.Wpf.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpVectors.Runtime, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d16e717f0a981fb9, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpVectors.1.0\lib\net20\SharpVectors.Runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Windows.Interactivity">
       <HintPath>..\packages\MSExpressionLibraries\System.Windows.Interactivity.dll</HintPath>
     </Reference>
-    <Reference Include="System.Xml" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xaml">
-      <RequiredTargetFramework>4.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="WindowsBase" />
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Behaviors\AutoTooltipTextBlockBehavior.cs" />
-    <Compile Include="CustomizableContextMenu\Configuration\Configuration.cs" />
-    <Compile Include="CustomizableContextMenu\Configuration\ContextCommandConfig.cs" />
-    <Compile Include="CustomizableContextMenu\CustomizableContextMenu.cs" />
-    <Compile Include="CustomizableContextMenu\Models\ContextMenuSubgroup.cs" />
-    <Compile Include="GanttDiagram\Converters\DigitGetHalfCoverter.cs" />
-    <Compile Include="GanttDiagram\Converters\GanttItemInRowPositionToHeightConverter.cs" />
-    <Compile Include="GanttDiagram\Converters\GenttItemInRowPositionToBottomMarginConverter.cs" />
-    <Compile Include="GanttDiagram\Converters\IntToLeftMarginConverter.cs" />
-    <Compile Include="GanttDiagram\Converters\ScaleStepToPointConverter.cs" />
-    <Compile Include="GanttDiagram\Converters\ScaleStepToViewPortConverter.cs" />
-    <Compile Include="GanttDiagram\Models\GanttItemInRowPosition.cs" />
-    <Compile Include="GanttDiagram\Models\IGanttItem.cs" />
-    <Compile Include="GanttDiagram\uscGanttDiagram.xaml.cs">
-      <DependentUpon>uscGanttDiagram.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="GanttDiagram\uscGanttItem.xaml.cs">
-      <DependentUpon>uscGanttItem.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="GanttDiagram\uscGanttRow.xaml.cs">
-      <DependentUpon>uscGanttRow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="GanttDiagram\uscGraphScale.xaml.cs">
-      <DependentUpon>uscGraphScale.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="GanttDiagram\uscRangeSelector.xaml.cs">
-      <DependentUpon>uscRangeSelector.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="GanttDiagram\uscThresholdLines.xaml.cs">
-      <DependentUpon>uscThresholdLines.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="GanttDiagram\ViewModels\GanttItemViewModelBase.cs" />
-    <Compile Include="GanttDiagram\ViewModels\GanttDiagramViewModelBase.cs" />
-    <Compile Include="GanttDiagram\ViewModels\GanttRowViewModelBase.cs" />
-    <Compile Include="GanttDiagram\ViewModels\Interfaces\IGanttDiagramViewModel.cs" />
-    <Compile Include="GanttDiagram\ViewModels\ScaleValue.cs" />
-    <Compile Include="GanttDiagram\Models\IThresholdLine.cs" />
-    <Compile Include="GanttDiagram\ViewModels\ThresholdLineViewModelBase.cs" />
-    <Compile Include="GanttDiagram\ViewModels\TimeGantt\TimeGanttDiagramViewModel.cs" />
-    <Compile Include="GanttDiagram\ViewModels\TimeGantt\TimeGanttItem.cs" />
-    <Compile Include="GanttDiagram\ViewModels\TimeGantt\TimeGanttItemViewModel.cs" />
-    <Compile Include="GanttDiagram\Models\TimeGanttThresholdLine.cs" />
-    <Compile Include="GanttDiagram\ViewModels\TimeGantt\TimeGanttThresholdLineViewModel.cs" />
-    <Compile Include="Infrastrucrure\Converters\BoolToVisibilityConverter.cs" />
-    <Compile Include="Infrastrucrure\Converters\CollectionToMaxColumnsCountConverter.cs" />
-    <Compile Include="Infrastrucrure\Converters\IntsToMarginConverter.cs" />
-    <Compile Include="Infrastrucrure\Converters\NullToCollapsedConverter.cs" />
-    <Compile Include="Infrastrucrure\Converters\ReverseBoolConverter.cs" />
-    <Compile Include="Infrastrucrure\Extensions\DependencyObjectExtensions.cs" />
-    <Compile Include="Infrastrucrure\UIElementsTreeHelper.cs" />
-    <Compile Include="VectorIconButton.cs" />
-    <Compile Include="VectorIconDropdownButton.cs" />
-    <Compile Include="VectorIconToggleButton.cs" />
-    <Page Include="CustomizableContextMenu\Styles\Colors.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="CustomizableContextMenu\Styles\LabelStyles.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="CustomizableContextMenu\Styles\ListViewStyles.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="CustomizableContextMenu\Styles\ScrollStyles.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="CustomizableContextMenu\Styles\VectorIconButtonStyles.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="CustomizableContextMenu\Styles\VectorIconToggleButtonStyles.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="CustomizableContextMenu\uscContextMenuBody.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="GanttDiagram\Styles\ScrollViewer.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="GanttDiagram\Styles\Templates.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="GanttDiagram\Styles\ToggleButton.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="GanttDiagram\uscGanttDiagram.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="GanttDiagram\uscGanttItem.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="GanttDiagram\uscGanttRow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="GanttDiagram\uscGraphScale.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="GanttDiagram\uscRangeSelector.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="GanttDiagram\uscThresholdLines.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\Generic.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Compile Include="CustomizableContextMenu\Models\ContextMenuCommand.cs" />
-    <Compile Include="CustomizableContextMenu\Models\ContextMenuGroup.cs" />
-    <Compile Include="CustomizableContextMenu\uscContextMenuBody.xaml.cs">
-      <DependentUpon>uscContextMenuBody.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="CustomizableContextMenu\ViewModels\MainViewModel.cs" />
-    <Compile Include="Infrastrucrure\Command.cs" />
-    <Compile Include="Infrastrucrure\ViewModelBase.cs" />
-    <Compile Include="Members\DrawingGroupExtension.cs" />
-    <Compile Include="Members\SvgConverter.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <None Include="packages.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Icons\recycle_bin.svg">
@@ -261,6 +36,16 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+    <PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers" Version="0.3.261602">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="SharpVectors" Version="1.7.7" />
+    <PackageReference Include="Microsoft.Windows.Compatibility" Version="6.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+  </ItemGroup>
 </Project>
