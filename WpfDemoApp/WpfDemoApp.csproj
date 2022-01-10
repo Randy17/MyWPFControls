@@ -14,12 +14,6 @@
     <Reference Include="Microsoft.Expression.Drawing">
       <HintPath>..\packages\MSExpressionLibraries\Microsoft.Expression.Drawing.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Expression.Interactions">
-      <HintPath>..\packages\MSExpressionLibraries\Microsoft.Expression.Interactions.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Windows.Interactivity">
-      <HintPath>..\packages\MSExpressionLibraries\System.Windows.Interactivity.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icons\039.svg">

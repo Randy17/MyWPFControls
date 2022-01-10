@@ -8,7 +8,7 @@
         xmlns:gantt="clr-namespace:WpfControlsLibrary.GanttDiagram;assembly=WpfControlsLibrary"
         xmlns:ganttVm="clr-namespace:WpfControlsLibrary.GanttDiagram.ViewModels.TimeGantt;assembly=WpfControlsLibrary"
         xmlns:behaviors="clr-namespace:WpfControlsLibrary.Behaviors;assembly=WpfControlsLibrary"
-        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:models="clr-namespace:WpfControlsLibrary.GanttDiagram.Models;assembly=WpfControlsLibrary"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525" WindowState="Maximized" Closing="Window_Closing">
