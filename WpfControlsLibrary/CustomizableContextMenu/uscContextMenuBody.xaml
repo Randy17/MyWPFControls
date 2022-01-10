@@ -215,7 +215,7 @@
             <WpfControls:VectorIconToggleButton x:Name="btnExtend" VerticalAlignment="Center" HorizontalAlignment="Center" 
                                                 Margin="4" Width="35" Height="35" 
                                                 Background="{StaticResource brushMainBackground}" BorderBrush="{StaticResource brushContour}"
-                                                VectorIconPath="Icons/open_folder.svg" Style="{StaticResource toggleExtendStyle}" IsChecked="{Binding IsExtendedOpen}" />
+                                                VectorIconPath="Icons/open_folder.svg" Style="{StaticResource toggleExtendStyle}" IsChecked="{Binding IsExtendedOpen, Mode=OneWay}" />
         </Grid>
 
         <Border x:Name="brdMainMenu" Grid.Row="1" Grid.Column="1" Style="{StaticResource borderMainStyle}">
