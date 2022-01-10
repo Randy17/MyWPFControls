@@ -2,6 +2,7 @@
   <PropertyGroup>
     <TargetFrameworks>net461;net6.0-windows</TargetFrameworks>
     <OutputType>Library</OutputType>
+    <Version>1.0.0</Version>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
